@@ -11,48 +11,18 @@ public class ApproxSolution {
 	private int[] colors;
 	private int[][] tablero;
 	private PriorityQueue<Cell> order;
+	private Sink[] sinks;
 	
-	public ApproxSolution(int fils, int cols, int[] colors, int[][] tablero) {
+	public ApproxSolution(int fils, int cols, int[] colors, int[][] tablero, Sink[] sinks) {
 		this.fils = fils;
 		this.cols = cols;
 		this.colors = colors;
 		this.tablero = tablero;
-	}
-	
-	private static class Cell{ // faltaria el compare aca
-		int x, y, color, priority;
-		
-		Cell(int x, int y, int color, int priority){
-			this.x=x;
-			this.y=y;
-			this.color=color;
-			this.priority=priority;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Cell other = (Cell) obj;
-			if (color != other.color)
-				return false;
-			if (priority != other.priority)
-				return false;
-			if (x != other.x)
-				return false;
-			if (y != other.y)
-				return false;
-			return true;
-		}
-		
-		
+		this.sinks= sinks;
 	}
 	
 	// el metodo busca obtener el nodo/ color que tenga una menor variedad de movimientos
+	// habria que arreglar que solo agarre el mejor de cada color, pero no se si el chequeo es worth
 	
 	public PriorityQueue<Cell> pickLessAmbiguous(){
 		
@@ -86,6 +56,22 @@ public class ApproxSolution {
 		return order;
 	}
 	
-	
+	public Tablero searchSolution(double time){
+		Tablero t=new Tablero(tablero, colors, sinks, null);
+		Tablero[] children;
+		Tablero bestChild;
+		Tablero best;
+		Cell current= new Cell(order.peek().getX(), order.peek().getY(), order.peek().getColor());
+		while (time > 0){
+			children=t.findChildren( current );
+			bestChild=children.findBest();
+			if( bestChild.isSolved() ){
+				return bestChild;
+			}else if( bestChild.getEmptyCells() < best.getEmptyCells() ){
+				best=bestChild;
+			}	
+		}
+		return best;
+	}
 
 }
