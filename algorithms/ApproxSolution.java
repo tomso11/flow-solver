@@ -2,7 +2,7 @@ package algorithms;
 
 import java.util.PriorityQueue;
 
-//Para la solucion aproximada pense en generar un arbol que parte de un tablero vacío, elige un color y comienza a avanzar sobre ese color
+//Para la solucion aproximada pense en generar un arbol que parte de un tablero vacï¿½o, elige un color y comienza a avanzar sobre ese color
 //cada "step" del algoritmo sera un nodo distinto, en cada nodo, el color seleccionado avanzara de a un casillero a la vez.
 //De esta manera
 public class ApproxSolution {
@@ -55,16 +55,35 @@ public class ApproxSolution {
 		}
 		return order;
 	}
+	// esta solucion itera siempre sobre el mismo color, ordenados segun la cantidad de movimientos posibles al principio
+	// una forma mas eficiente quiza seria recorrer en todos los pasos la matriz y tomar el color con menor
+	// cantidad de movimientos posibles y mover ese.
 	
 	public Tablero searchSolution(double time){
-		Tablero t=new Tablero(tablero, colors, sinks, null);
+		Tablero t=new Tablero(tablero, cols, fils, colors, sinks, null, 0);
 		Tablero[] children;
 		Tablero bestChild;
-		Tablero best;
+		Tablero best=t;
+		// esto no esta bien, el current deberia ser una propiedad del estado/tablero
 		Cell current= new Cell(order.peek().getX(), order.peek().getY(), order.peek().getColor());
 		while (time > 0){
 			children=t.findChildren( current );
-			bestChild=children.findBest();
+			if ( children == null ){ // se trabo o no tiene solucion
+				
+			}
+			sortByScore(children);
+			// aca podriamos chequear si el mejor queda de alguna manera estancado
+			// chequeando dead-ends o bottle necks o colores inalcanzables
+			bestChild=children[0];
+			// aca habria que cambiar de current
+			if( bestChild.isColorComplete(current) ){
+				order.pop();
+				current=new Cell(order.peek().getX(), order.peek().getY(), order.peek().getColor());
+				// seleccionamos el proximo color
+			}
+			if ( bestChild.getScore() > best.getScore() ){
+				best=bestChild;
+			}
 			if( bestChild.isSolved() ){
 				return bestChild;
 			}else if( bestChild.getEmptyCells() < best.getEmptyCells() ){
@@ -72,6 +91,10 @@ public class ApproxSolution {
 			}	
 		}
 		return best;
+	}
+	
+	public void sortByScore( Tablero[] children ){ //ordenar eficientemente
+		
 	}
 
 }
