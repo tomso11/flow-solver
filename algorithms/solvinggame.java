@@ -1,4 +1,4 @@
-package TPE;
+package algorithms;
 
 public class SolvingGame {
 	 private static int fils;

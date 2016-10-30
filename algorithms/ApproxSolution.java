@@ -59,11 +59,11 @@ public class ApproxSolution {
 	// una forma mas eficiente quiza seria recorrer en todos los pasos la matriz y tomar el color con menor
 	// cantidad de movimientos posibles y mover ese.
 	
-	public Tablero searchSolution(double time){
-		Tablero t=new Tablero(tablero, cols, fils, colors, sinks, null, 0);
-		Tablero[] children;
-		Tablero bestChild;
-		Tablero best=t;
+	public TableroControl searchSolution(double time){
+		TableroControl t=new TableroControl(tablero, cols, fils, colors, sinks, null, 0);
+		TableroControl[] children;
+		TableroControl bestChild;
+		TableroControl best=t;
 		// esto no esta bien, el current deberia ser una propiedad del estado/tablero
 		Cell current= new Cell(order.peek().getX(), order.peek().getY(), order.peek().getColor());
 		while (time > 0){
@@ -77,7 +77,7 @@ public class ApproxSolution {
 			bestChild=children[0];
 			// aca habria que cambiar de current
 			if( bestChild.isColorComplete(current) ){
-				order.pop();
+				order.poll();
 				current=new Cell(order.peek().getX(), order.peek().getY(), order.peek().getColor());
 				// seleccionamos el proximo color
 			}
@@ -93,7 +93,7 @@ public class ApproxSolution {
 		return best;
 	}
 	
-	public void sortByScore( Tablero[] children ){ //ordenar eficientemente
+	public void sortByScore( TableroControl[] children ){ //ordenar eficientemente
 		
 	}
 

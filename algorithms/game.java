@@ -1,4 +1,4 @@
-package TPE;
+package algorithms;
 
 public class Game {
 	public static void main(String[] args) {

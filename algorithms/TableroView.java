@@ -1,4 +1,4 @@
-package TPE;
+package algorithms;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-public class Tablero extends JPanel implements ComponentListener , ActionListener{
+public class TableroView extends JPanel implements ComponentListener , ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JLabel mTitle = null;
 	private JButton[][] mCasillas = null ;
@@ -55,7 +55,7 @@ public class Tablero extends JPanel implements ComponentListener , ActionListene
         }
     }
     
-    public Tablero() {        
+    public TableroView() {        
         this.setBackground(Color.BLACK);
         this.addComponentListener(this);
         this.setLayout(null);              

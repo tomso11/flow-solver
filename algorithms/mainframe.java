@@ -1,4 +1,4 @@
-package TPE;
+package algorithms;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 
 public class MainFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
-	private Tablero mTablero = new Tablero();
+	private TableroView mTablero = new TableroView();
     
     MainFrame(int filas, int columnas, char[][] tablero) {
         try {
