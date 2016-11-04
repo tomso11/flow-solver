@@ -2,28 +2,46 @@ package algorithms;
 
 public class Sink {
 	
-	private int x, y, color;
+	private int x1, y1, x2, y2, color;
 
-	public Sink(int x, int y, int color) {
-		this.x = x;
-		this.y = y;
+	public Sink(int x, int y, int x2, int y2, int color) {
+		this.x1 = x;
+		this.y1 = y;
+		this.x2 = x2;
+		this.y2 = y2;
 		this.color = color;
 	}
 
-	public int getX() {
-		return x;
+	public int getFirstX() {
+		return x1;
 	}
 
-	public void setX(int x) {
-		this.x = x;
+	public void setFirstX(int x1) {
+		this.x1 = x1;
 	}
 
-	public int getY() {
-		return y;
+	public int getFirstY() {
+		return y1;
 	}
 
-	public void setY(int y) {
-		this.y = y;
+	public void setFirstY(int y1) {
+		this.y1 = y1;
+	}
+
+	public int getSecX() {
+		return x2;
+	}
+
+	public void setSecX(int x2) {
+		this.x2 = x2;
+	}
+
+	public int getSecY() {
+		return y2;
+	}
+
+	public void setSecY(int y2) {
+		this.y2 = y2;
 	}
 
 	public int getColor() {

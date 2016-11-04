@@ -11,7 +11,7 @@ public class HCInput {
 	}
 	
 	//Lee's Algorithm
-	public int[][] quickSolution(){
+	public void quickSolution(){
 		int[][] grid=tab.getTablero();
 		for(int i=0; i<sinks.length ; i++){
 			int x1=sinks[i].getFirstX();
@@ -19,6 +19,7 @@ public class HCInput {
 			int x2=sinks[i].getSecX();
 			int y2=sinks[i].getSecY();
 			grid=markMatrix(x1,y1,x2,y2,grid,sinks[i].getColor());
+			// llamar hill climbing
 		}
 		//al terminar este for lo enviamos al hill climbing
 	}
@@ -32,19 +33,19 @@ public class HCInput {
 		 // solo marco si esta sin color
 		if( x1 != 0 && grid[x1-1][y1] == -1){
 			grid[x1-1][y1]=(grid[x1][y1]>10)? (grid[x1][y1]+1):(10); // si la anterior tiene numero le agrego peso, sino, comienzo el camino
-			grid=markMatrix(x1-1,y1,x2,y2,grid);
+			grid=markMatrix(x1-1,y1,x2,y2,grid, color);
 		}
 		if( x1 != tab.getX() && grid[x1+1][y1]== -1){
 			grid[x1+1][y1]=(grid[x1][y1] > 10)? (grid[x1][y1]+1):(10);
-			grid=markMatrix(x1+1,y1,x2,y2,grid);
+			grid=markMatrix(x1+1,y1,x2,y2,grid, color);
 		}
 		if( y1 != 0 && grid[x1][y1-1]== -1){
 			grid[x1][y1-1]=(grid[x1][y1] > 10)? (grid[x1][y1]+1):(10);
-			grid=markMatrix(x1,y1-1,x2,y2,grid);
+			grid=markMatrix(x1,y1-1,x2,y2,grid, color);
 		}
 		if( y1 != tab.getY() && grid[x1][y1+1]== -1){
 			grid[x1][y1+1]=(grid[x1][y1]>10)? (grid[x1][y1]+1):(10);
-			grid=markMatrix(x1,y1+1,x2,y2,grid);
+			grid=markMatrix(x1,y1+1,x2,y2,grid, color);
 		}
 		
 		// aca habria que mandarlo directo al hill climbing
