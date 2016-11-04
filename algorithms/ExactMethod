@@ -1,0 +1,31 @@
+package tpe;
+
+import java.awt.Point;
+import java.util.HashSet;
+import java.util.Set;
+
+public class ExactMethod {
+	
+	boolean ExactMethod(Tablero tab){
+		long time = System.currentTimeMillis();
+		Set<Tablero> soluciones = new HashSet<Tablero>();
+		Point[] sink = tab.getSinks();
+		soluciones.add(tab);
+		
+		for (int i = 0 ; i < tab.getCantColores(); i+2 ){
+			for (Tablero each: soluciones){
+				soluciones = findPathWrapper(each, sink[i], sink[i+1],soluciones);
+			}
+		}
+		time = System.currentTimeMillis() - time;
+		System.out.println("El algoritmo encontro la solucion exacta en " + time + " segundos.");
+	}
+
+	buscarCamino(){
+		for (int j=0  ; j < 4 ; j++){
+
+		}
+			
+		}
+
+}
