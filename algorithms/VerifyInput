@@ -78,7 +78,7 @@ public class VerifyInput {
 		return cols;
 	}
 
-	public static char[][] getTable() {
+	public static int[][] getTable() {
 		return table;
 	}
 }
