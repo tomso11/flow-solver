@@ -26,30 +26,7 @@ public class TableroView extends JPanel implements ComponentListener , ActionLis
         this.setLayout(null);              
     }
     
-    public void inicializar(int[][] tablero) {
-        mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
-        for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
-        	for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
-        		JButton temp = new JButton();
-        		temp.addActionListener(this);
-        		temp.setText("[" + fila + "," + columna + "]");                            
-        		mCasillas[fila][columna] = temp;                        
-                this.add(temp);
-                mCasillas[fila][columna].setOpaque(true);
-                this.pintarCasilla(fila, columna, tablero[fila][columna]);
-            }
-        }
-
-        mTitle = new JLabel ("'Free Flow Game Solver'");
-        mTitle.setForeground(Color.WHITE);
-        add(mTitle);
-
-        mBusEx = new JButton("Busqueda Exacta");
-        add(mBusEx);
-        
-        mBusAp = new JButton("Busqueda Aproximada");
-        add(mBusAp);
-    }
+    
     public void inicializar(int[][] tablero) {
         mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
         for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
@@ -163,4 +140,12 @@ public class TableroView extends JPanel implements ComponentListener , ActionLis
                 break;
     	}
     }
+
+	public void actionPerformed(ActionEvent arg0) {}
+
+	public void componentHidden(ComponentEvent arg0) {}
+
+	public void componentMoved(ComponentEvent arg0) {}
+
+	public void componentShown(ComponentEvent arg0) {}
 }
