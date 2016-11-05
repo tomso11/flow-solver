@@ -47,6 +47,7 @@ public class HCInput {
 			grid[x1][y1+1]=(grid[x1][y1]>10)? (grid[x1][y1]+1):(10);
 			grid=markMatrix(x1,y1+1,x2,y2,grid, color);
 		}
+		return grid;
 		
 		// aca habria que mandarlo directo al hill climbing
 	}
