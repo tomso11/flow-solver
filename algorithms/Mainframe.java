@@ -18,7 +18,7 @@ public class MainFrame extends JFrame{
         }
     }
 
-    private void jbInit(int filas, int columnas, char[][] tablero) throws Exception {
+    private void jbInit(int filas, int columnas, int[][] tablero) throws Exception {
         
         this.setLayout(new BorderLayout());
         this.setSize( new Dimension(650,600));
