@@ -57,7 +57,7 @@ public class ExactMethod {
 			cell.translate(movement[i], movement[i+1]);
 			if( tablero.cellIsEmpty(cell)){
 				if (print){
-					MainFrame draw = new MainFrame(tablero.getFils(),tablero.getCols(),tablero);
+					MainFrame draw = new MainFrame(tablero.getFils(),tablero.getCols(),tablero.getTablero());
 					draw.setVisible(true);
 					try{
 						Thread.sleep(100);
