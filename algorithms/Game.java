@@ -6,17 +6,18 @@ public class Game {
 		String approx= "approx";
 		String progress= "progress";
 		Reader a = new Reader();
-		Solver s=new Solver();
-		String texto = a.readTxt("C:\\Users\\flor\\Desktop\\Facu\\Eclipse\\TPE\\src\\TPEprototype\\"+args[0]);
-		SolvingGame juego = new SolvingGame();
-		juego.input(texto);
+		Solver s = new Solver();
+		String text = a.readTxt(args[0]);
+		VerifyInput game = new VerifyInput();
+		game.input(text);
+		int[][] table = game.getTable();
+		System.out.println("Free Flow Game Solver!");
+		System.out.println("Beggining GameBoard: \n");
 		for ( int j = 0 ; j < 6; j++ ){
-				char[][] table = SolvingGame.getTable();
 				System.out.println(table[j]);
 			}
-		System.out.println("Free Flow Game Solver!");
-        MainFrame f = new MainFrame(juego.getFils(),juego.getCols(),SolvingGame.getTable());
-        f.setVisible(true);
+        	MainFrame window = new MainFrame(game.getFils(),game.getCols(),game.getTable());
+        	window.setVisible(true);
 		if (args[1]!=null && args[1].equals(exact)){
 			if (args[2]!=null && args[2].equals(progress)){
 				s.solExact(true);
