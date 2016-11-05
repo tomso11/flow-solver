@@ -15,12 +15,66 @@ public class TableroView extends JPanel implements ComponentListener , ActionLis
 	private JButton[][] mCasillas = null ;
 	private JButton mBusEx = null;
 	private JButton mBusAp = null;
-    private int mNumeroDeFilas = 6 ;
-    private int mNumeroDeColumnas = 6 ;
-    private int mSeparacion = 2 ;
-    private int mAlturaBotones = 50 ;
-    private int mAlturaInicio = 30 ;
+    	private int mNumeroDeFilas = 6 ;
+    	private int mNumeroDeColumnas = 6 ;
+    	private int mSeparacion = 2 ;
+    	private int mAlturaBotones = 50 ;
+    	private int mAlturaInicio = 30 ;
     
+    public TableroView() {        
+        this.setBackground(Color.BLACK);
+        this.setLayout(null);              
+    }
+    
+    public void inicializar(int[][] tablero) {
+        mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
+        for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
+        	for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
+        		JButton temp = new JButton();
+        		temp.addActionListener(this);
+        		temp.setText("[" + fila + "," + columna + "]");                            
+        		mCasillas[fila][columna] = temp;                        
+                this.add(temp);
+                mCasillas[fila][columna].setOpaque(true);
+                this.pintarCasilla(fila, columna, tablero[fila][columna]);
+            }
+        }
+
+        mTitle = new JLabel ("'Free Flow Game Solver'");
+        mTitle.setForeground(Color.WHITE);
+        add(mTitle);
+
+        mBusEx = new JButton("Busqueda Exacta");
+        add(mBusEx);
+        
+        mBusAp = new JButton("Busqueda Aproximada");
+        add(mBusAp);
+    }
+    public void inicializar(int[][] tablero) {
+        mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
+        for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
+        	for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
+        		JButton temp = new JButton();
+        		temp.addActionListener(this);
+        		temp.setText("[" + fila + "," + columna + "]");                            
+        		mCasillas[fila][columna] = temp;                        
+                this.add(temp);
+                mCasillas[fila][columna].setOpaque(true);
+                this.pintarCasilla(fila, columna, tablero[fila][columna]);
+            }
+        }
+        mCasillas[3][3].setOpaque(true);
+        mCasillas[3][3].setBackground(Color.YELLOW);
+        mTitle = new JLabel ("'Free Flow Game Solver'");
+        mTitle.setForeground(Color.WHITE);
+        add(mTitle);
+
+        mBusEx = new JButton("Busqueda Exacta");
+        add(mBusEx);
+        
+        mBusAp = new JButton("Busqueda Aproximada");
+        add(mBusAp);
+    }
     public void acomodar() {
         
         int ancho = this.getWidth();
@@ -54,50 +108,9 @@ public class TableroView extends JPanel implements ComponentListener , ActionLis
                }
         }
     }
-    
-    public TableroView() {        
-        this.setBackground(Color.BLACK);
-        this.addComponentListener(this);
-        this.setLayout(null);              
-    }
-
-    public void inicializar(char[][] tablero) {
-        mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
-        for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
-        	for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
-        		JButton temp = new JButton();
-        		temp.addActionListener(this);
-        		temp.setText("[" + fila + "," + columna + "]");                            
-        		mCasillas[fila][columna] = temp;                        
-                this.add(temp);
-                mCasillas[fila][columna].setOpaque(true);
-                this.pintarCasilla(fila, columna, tablero[fila][columna]);
-            }
-        }
-        mCasillas[3][3].setOpaque(true);
-        mCasillas[3][3].setBackground(Color.YELLOW);
-        mTitle = new JLabel ("'Free Flow Game Solver'");
-        mTitle.setForeground(Color.WHITE);
-        add(mTitle);
-
-        mBusEx = new JButton("Busqueda Exacta");
-        add(mBusEx);
-        
-        mBusAp = new JButton("Busqueda Aproximada");
-        add(mBusAp);
-    }
 
     public void componentResized(ComponentEvent e) {
         this.acomodar();
-    }
-
-    public void componentMoved(ComponentEvent e) {
-    }
-
-    public void componentShown(ComponentEvent e) {
-    }
-
-    public void componentHidden(ComponentEvent e) {
     }
 
     public void setNumeroDeFilas(int mNumeroDeFilas) {
@@ -149,12 +162,5 @@ public class TableroView extends JPanel implements ComponentListener , ActionLis
                 mCasillas[fila][columna].setForeground(Color.PINK);
                 break;
     	}
-    }
-    
-    public void actionPerformed(ActionEvent e) {        
-        if( e.getSource() instanceof JButton ) {
-            JButton temp = (JButton) e.getSource() ;
-            temp.setBackground( Color.RED );
-        }
     }
 }
