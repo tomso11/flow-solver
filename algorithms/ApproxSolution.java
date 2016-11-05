@@ -96,5 +96,74 @@ public class ApproxSolution {
 	public void sortByScore( TableroControl[] children ){ //ordenar eficientemente
 		
 	}
+	
+	public void climbSolution() {
+		boolean flag;
+		List<Integer> dir = new LinkedList<Integer>();
+		int[][] tableroAux = tablero;
+		String dir = "";
+		boolean up, down, left, right;
+		for(int k = 0; k < sinks.length; k ++) {
+			for(int i = 0; i < fils; i ++) {
+				for(int j = 0; j < cols; j ++) {
+					flag = tableroAux[i][j] == -1 && j != sinks[k].getFirstX() && j != sinks[k].getFirstX() && i != sinks[k].getFirstY() && i != sinks[k].getFirstY();
+					
+					if(flag) {
+						for (int l = i - 1; l > 0; l--) {
+							if (tableroAux[i][j] != sinks[k].getColor() && tableroAux[i][j] != -1) {
+								break;
+							} else {
+								up = true;
+							}	
+						}
+						
+						for (int l = i + 1; l < fils; l++) {
+							if (tableroAux[i][j] != sinks[k].getColor() && tableroAux[i][j] != -1) {
+								break;
+							} else {
+								down = true;
+							}
+						}
+
+						for (int m = j - 1; m > 0; m--) {
+							if (tableroAux[i][j] != sinks[k].getColor() && tableroAux[i][j] != -1) {
+								break;
+							} else {
+								left = true;
+							}
+						}
+						
+						for (int m = j + 1; m < cols; m++) {
+							if (tableroAux[i][j] != sinks[k].getColor() && tableroAux[i][j] != -1) {
+								break;
+							} else {
+								right = true;
+							}
+						}
+						
+						dir.clean();
+						
+						if(up) {
+							dir.add(1);
+						}
+						if(down) {
+							dir.add(2);
+						}
+						if(left) {
+							dir.add(3);
+						}
+						if(right) {
+							dir.add(4);
+						}
+						
+						if(dir.length >= 2) {
+							dir.shuffle();
+							
+						}
+					}
+					
+				
+				}
+					
 
 }
