@@ -10,7 +10,7 @@ public class MainFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private TableroView mTablero = new TableroView();
     
-    MainFrame(int filas, int columnas, char[][] tablero) {
+    MainFrame(int filas, int columnas, int[][] tablero) {
         try {
             jbInit(filas,columnas,tablero);
         } catch (Exception e) {
