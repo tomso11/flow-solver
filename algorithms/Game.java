@@ -10,13 +10,13 @@ public class Game {
 		String text = a.readTxt(args[0]);
 		VerifyInput game = new VerifyInput();
 		game.input(text);
-		int[][] table = game.getTable();
+		int[][] table = VerifyInput.getTable();
 		System.out.println("Free Flow Game Solver!");
 		System.out.println("Beggining GameBoard: \n");
 		for ( int j = 0 ; j < 6; j++ ){
 				System.out.println(table[j]);
 			}
-        	MainFrame window = new MainFrame(game.getFils(),game.getCols(),game.getTable());
+        	MainFrame window = new MainFrame(game.getFils(),game.getCols(),VerifyInput.getTable());
         	window.setVisible(true);
 		if (args[1]!=null && args[1].equals(exact)){
 			if (args[2]!=null && args[2].equals(progress)){
