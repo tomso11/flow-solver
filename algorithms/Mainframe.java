@@ -19,13 +19,11 @@ public class MainFrame extends JFrame{
     }
 
     private void jbInit(int filas, int columnas, int[][] tablero) throws Exception {
-        
         this.setLayout(new BorderLayout());
         this.setSize( new Dimension(650,600));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Free Flow Game Solver:");
         this.add(mTablero, BorderLayout.CENTER );
         mTablero.inicializar(tablero,filas,columnas);
-                
     }
 }
