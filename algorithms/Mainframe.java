@@ -25,9 +25,7 @@ public class MainFrame extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Free Flow Game Solver:");
         this.add(mTablero, BorderLayout.CENTER );
-        mTablero.setNumeroDeColumnas(columnas);
-        mTablero.setNumeroDeFilas(filas);
-        mTablero.inicializar(tablero);
+        mTablero.inicializar(tablero,filas,columnas);
                 
     }
 }
