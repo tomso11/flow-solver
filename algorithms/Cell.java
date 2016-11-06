@@ -65,8 +65,6 @@ public class Cell {
 		Cell other = (Cell) obj;
 		if (color != other.color)
 			return false;
-		if (priority != other.priority)
-			return false;
 		if (x != other.x)
 			return false;
 		if (y != other.y)

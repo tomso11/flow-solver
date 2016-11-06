@@ -1,6 +1,8 @@
 package algorithms;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class HCInput {
 
@@ -131,11 +133,11 @@ public class HCInput {
 	}
 	
 	public static void main(String[] args) {
-		int[][] grid ={{-1, 0, -1},{-1, -1, -1},{-1, -1, 0}};
-		Sink sink=new Sink(0,1,2,2,0);
+		int[][] grid ={{-1, 0, -1, -1, -1, -1},{-1, -1, -1, -1, -1, -1},{-1, -1, -1, -1, -1, -1}, {-1,-1,-1,-1,-1,-1} , {-1,-1,-1,-1,-1,-1}, {-1,-1,-1,-1,0,-1}};
+		Sink sink=new Sink(0,1,5,4,0);
 		Sink[] sinks={sink};
 		int[] colors={0};
-		TableroControl tab=new TableroControl(grid, 3, 3, colors, sinks);
+		TableroControl tab=new TableroControl(grid, 6, 6, colors, sinks);
 		HCInput input=new HCInput(tab,sinks);
 		//input.quickSolution();
 		input.queueSolution();
@@ -146,6 +148,7 @@ public class HCInput {
 		LinkedList<Cell> queue = new LinkedList<Cell>();
 		int[][] grid = tab.getTablero();
 		boolean found=false;
+		List<Cell> neighbors=new ArrayList<Cell>();
 		for(int i=0; i< sinks.length ; i++){ 
 			Cell c=new Cell(sinks[i].getFirstX(),sinks[i].getFirstY(),sinks[i].getColor() );
 			Cell tgt=new Cell(sinks[i].getSecX(),sinks[i].getSecY(),sinks[i].getColor() );
@@ -154,61 +157,65 @@ public class HCInput {
 			while(!(queue.isEmpty()) ){
 				System.out.println("vamos otra vez");
 				Cell current= queue.poll();
-				Cell[] neighbors=getNeighbors(current, grid, tgt);
-				if(neighbors[0] != null){
-					for(int j=0; j< neighbors.length && !found; j++){
-						System.out.println("las coordenadas de este neigh son x: "+neighbors[j].getX()+ " y: "+neighbors[j].getY() );
-						if(neighbors[j].equals(tgt)){
+				System.out.println("busco vecinos de  x: "+current.getX()+ " y: "+current.getY() );
+				neighbors=getNeighbors(current, grid, tgt);
+				if(!(neighbors.isEmpty()) ){
+					for(int j=0; j< neighbors.size() && !found; j++){
+						System.out.println("las coordenadas de este neigh son x: "+neighbors.get(j).getX()+ " y: "+neighbors.get(j).getY() );
+						if((neighbors.get(j)).equals(tgt)){
 							grid=markPath(grid, tgt, c);
 							found=true;
 							queue=emptyQ(queue);
 						}
 						else{
-							queue.add(neighbors[j]);
+							queue.add(neighbors.get(j));
 							System.out.println("encolo");
 						}
 					}
 				} // falta un else ?
 			}
 			grid=clearGrid(grid);
+			System.out.println("wot");
 			queue=emptyQ(queue);
 			printMatrix(grid);
 		}
 		return grid;
 	}
 
-	private Cell[] getNeighbors(Cell current, int[][] grid, Cell tgt) {
-		Cell[] arr = new Cell[3];
-		int n=0;
+	private List<Cell> getNeighbors(Cell current, int[][] grid, Cell tgt) {
+		List<Cell> arr = new ArrayList<Cell>();
 		int x1=current.getX(),y1=current.getY();
 		int x2=tgt.getX(), y2=tgt.getY();
 		if( x1 != 0 && grid[x1-1][y1] == -1){
 			//System.out.println("el color es "+current.getColor());
 			grid[x1-1][y1]=(current.getColor() >= 10)? (current.getColor()+1):(10); // si la anterior tiene numero le agrego peso, sino, comienzo el camino 
-			arr[n++]=new Cell(x1-1,y1,(current.getColor() >= 10)? (current.getColor()+1):(10));
+			arr.add(new Cell(x1-1,y1,(current.getColor() >= 10)? (current.getColor()+1):(10)));
 			printMatrix(grid);
 		}
 		if( x1 != tab.getX()-1 && grid[x1+1][y1]== -1){
 			//System.out.println("el color es "+current.getColor());
 			grid[x1+1][y1]=(current.getColor() >= 10)? (current.getColor()+1):(10);
-			arr[n++]=new Cell(x1+1,y1,(current.getColor() >= 10)? (current.getColor()+1):(10));
+			arr.add(new Cell(x1+1,y1,(current.getColor() >= 10)? (current.getColor()+1):(10)));
 			printMatrix(grid);
 		}
 		if( y1 != 0 && grid[x1][y1-1]== -1){
 			//System.out.println("el color es "+current.getColor());
 			grid[x1][y1-1]=(current.getColor() >= 10)? (current.getColor()+1):(10);
-			arr[n++]=new Cell(x1,y1-1,(current.getColor() >= 10)? (current.getColor()+1):(10));
+			arr.add(new Cell(x1,y1-1,(current.getColor() >= 10)? (current.getColor()+1):(10)));
 			printMatrix(grid);
 		}
 		if( y1 != tab.getY()-1 && grid[x1][y1+1]== -1){
 			//System.out.println("el color es "+current.getColor());
 			grid[x1][y1+1]=(current.getColor() >= 10)? (current.getColor()+1):(10);
-			arr[n++]=new Cell(x1,y1+1,(current.getColor() >= 10)? (current.getColor()+1):(10));
+			arr.add(new Cell(x1,y1+1,(current.getColor() >= 10)? (current.getColor()+1):(10)));
 			printMatrix(grid);
 		}
 		if ( (x1-1== x2 && y1 == y2) || (x1+1== x2 && y1 == y2) || (x1== x2 && y1-1 == y2) || (x1== x2 && y1+1 == y2)){
 			System.out.println("found tgt!");
-			arr[n++]=new Cell(x2,y2,tgt.getColor());
+			arr.add(new Cell(x2,y2,tgt.getColor()));
+		}
+		for(Cell c:arr){
+			System.out.println("coordenadas x: "+c.getX()+" y : "+c.getY());
 		}
 		return arr;
 	}
@@ -218,8 +225,9 @@ public class HCInput {
 		int x2=source.getX(), y2=source.getY();
 		int pathLength=0;
 		Cell min = new Cell(-1,-1,tab.getX() * tab.getY()+10); // celda a la que nos vamos a mover
+		boolean check=!( (min.getX() == x2) && (min.getY() == y2) );
 		System.out.println("las coordenadas de este tgt son x: "+tgt.getX()+ " y: "+tgt.getY() );
-		while( min.getX() != x2 && min.getY() != y2){ //grid[x][y] >= 10 || ( x==tgt.getX() && y==tgt.getY() ) 
+		while( check ){ //grid[x][y] >= 10 || ( x==tgt.getX() && y==tgt.getY() ) 
 			System.out.println("dentro del path");
 			if( x != 0 && grid[x-1][y]>=10 ){
 				if( grid[x-1][y] < min.getColor() ){
@@ -249,6 +257,12 @@ public class HCInput {
 					min.setColor(grid[x][y+1]);
 				}
 			}
+			if ( (x-1== x2 && y == y2) || (x+1== x2 && y == y2) || (x== x2 && y-1 == y2) || (x== x2 && y+1 == y2)){
+				System.out.println("found tgt!");
+				min.setX(x2);
+				min.setY(y2);
+				min.setColor(tgt.getColor());
+			}
 			printMatrix(grid);
 			System.out.println(tgt.getColor());
 			grid[min.getX()][min.getY()]=tgt.getColor(); // como los colores van de 0 a 9 cuando llegue a 10 y lo pinte cortara la iteracion
@@ -257,6 +271,8 @@ public class HCInput {
 			System.out.println("las coordenadas de current son x: "+min.getX()+ " y: "+min.getY() +" y su color "+min.getColor());
 			printMatrix(grid);
 			pathLength++;
+			System.out.println("largo del camino: "+ pathLength);
+			check=!( (min.getX() == x2) && (min.getY() == y2) );
 		}
 		System.out.println("largo del camino: "+ pathLength);
 		return grid;
