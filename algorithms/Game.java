@@ -1,23 +1,35 @@
+package algorithms;
+
+import java.awt.Point;
+
 public class Game {
 	public static void main(String[] args) {
 		String exact= "exact";
 		String approx= "approx";
 		String progress= "progress";
 		Reader a = new Reader();
-		Solver s = new Solver();
 		VerifyInput game = new VerifyInput();
 		String text = a.readTxt("C:\\Users\\flor\\Desktop\\Facu\\Eclipse\\flow-solver\\algorithms\\Tablero.txt");
 		if (game.input(text)){
 		int[][] table = VerifyInput.getTable();
 		System.out.println("Free Flow Game Solver!");
-		System.out.println("Beggining GameBoard: \n");
-		for ( int j = 0 ; j < 6 ; j++ ){
-			for (int i = 0 ; i < 6 ; i++){
-				System.out.println(table[j][i]);
+		System.out.println("Beggining GameBoard:");
+		
+		for (int x=0; x < 6; x++) {
+			  System.out.print("|");
+			  for (int y=0; y < 6 ; y++) {
+			    System.out.print (table[x][y]);
+			    if (y!=5) System.out.print("\t");
+			  }
+			  System.out.println("|");
 			}
-		}
-        	MainFrame window = new MainFrame(game.getFils(),game.getCols(),VerifyInput.getTable());
-        	window.setVisible(true);
+		MainFrame window0 = new MainFrame(game.getFils(),game.getCols(),table);
+        window0.setVisible(true);
+		Tablero tablero = new Tablero(table ,game.getFils(),game.getCols(),game.getColours(),game.getSinks());
+		ExactMethod solution = new ExactMethod();
+		solution.ExactSolution(tablero, false);
+        MainFrame window = new MainFrame(game.getFils(),game.getCols(),table);
+        window.setVisible(true);
         	
 /*
 * 		if (args[1]!=null && args[1].equals(exact)){
@@ -45,8 +57,6 @@ public class Game {
 		}
 }
 
-
-		
 		public static boolean isInt(String str) {
 		    try {
 		        Integer.parseInt(str);
