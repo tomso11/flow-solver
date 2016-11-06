@@ -48,7 +48,8 @@ public class ExactMethod {
 
 		
 		time = System.currentTimeMillis() - time;
-		System.out.println("El algoritmo encontro la solucion exacta en " + time + " segundos.");
+		System.out.println("El algoritmo encontro la solucion exacta en " + time/60000 " minutos," + (time%60000)/1000 +" segundos y " (time%1000) +"milisegundos.");
+		System.out.println
 		return;
 	}
 
