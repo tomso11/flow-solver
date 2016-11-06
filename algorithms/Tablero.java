@@ -56,8 +56,10 @@ public class Tablero {
 	}
 	
 	public boolean cellIsEmpty(Point cell){
-		if (tablero[(int) cell.getX()][(int) cell.getY()] == -1)
-			return true;
+		if (cell.getX() > 0 && cell.getY() > 0 && cell.getX() < this.getCols() && cell.getY() < this.getFils() ){
+			if (tablero[(int) cell.getX()][(int) cell.getY()] == -1)
+				return true;
+		}
 		return false;
 	}
 
@@ -92,5 +94,24 @@ public class Tablero {
 		return empty;
 	}
 	
-
+	public boolean equals (Object obj){
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tablero other = (Tablero) obj;
+		for (int x=0; x < this.getCols(); x++) {
+			for (int y=0; y < this.getFils() ; y++) {
+				if(this.getTablero()[x][y] != other.getTablero()[x][y])
+					return false;
+			}
+		}
+		return true;
+		}
+	
+	public int hashcode(){
+		return this.getFils()+this.getCols();
+	}
 }
