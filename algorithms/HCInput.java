@@ -59,8 +59,10 @@ public class HCInput {
 			grid=markMatrix(x1,y1+1,x2,y2,grid, color);
 			printMatrix(grid);
 		}
+
 		printMatrix(grid);
 		return grid; // provisorio
+
 		// aca habria que mandarlo directo al hill climbing
 	}
 

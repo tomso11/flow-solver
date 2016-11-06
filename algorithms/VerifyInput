@@ -8,8 +8,7 @@ public class VerifyInput {
 	 
 	 public VerifyInput(){
 	 }
-
-	public boolean input (String ent){
+		public boolean input (String ent){
 		int entry = 0, i = 0;
 		while (entry != 2){
 			if ( Character.isDigit(ent.charAt(i))){
@@ -47,7 +46,7 @@ public class VerifyInput {
 					int num = ent.charAt(i)-'0';
 					table[j][k] = num;
 					colours[num]++;
-				}elseif(ent.charAt(i) == ' '){
+				}else if(ent.charAt(i) == ' '){
 					table[j][k] = -1;
 				}else{
 					System.out.println("El formato del archivo es incorrecto!");
@@ -75,7 +74,7 @@ public class VerifyInput {
 	}
 
 	public int getCols() {
-		return cols;
+			return cols;
 	}
 
 	public static int[][] getTable() {

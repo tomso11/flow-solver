@@ -93,6 +93,7 @@ public class TableroControl {
 		return emptyCells == 0;
 	}
 
+	@SuppressWarnings("null")
 	public TableroControl[] findChildren( Cell c ) {
 		int i=c.getX(),j=c.getY(), index=0;
 		TableroControl[] ans = null;
@@ -162,7 +163,7 @@ public class TableroControl {
 		
 		for(int i=0; i<sinks.length; i++ ){
 			if( sinks[i].getColor() == c.getColor() ){ 
-				if( sinks[i].getX() == c.getX() && sinks[i].getY() == c.getY() ) {
+				if( sinks[i].getFirstX() == c.getX() && sinks[i].getFirstY() == c.getY() || sinks[i].getSecX() == c.getX() && sinks[i].getSecX() == c.getX() ) {
 					if( (c.getY() != y && tablero[c.getY()+1][c.getX()] == c.getColor()) || (c.getY() != 0 && tablero[c.getY()-1][c.getX()] == c.getColor()) || (c.getX() != x && tablero[c.getY()][c.getX()+1] == c.getColor()) || (c.getX()!= 0 && tablero[c.getY()][c.getX()-1] == c.getColor()) )
 						return true;
 				}
