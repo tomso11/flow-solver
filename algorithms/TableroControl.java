@@ -13,6 +13,15 @@ public class TableroControl {
 	private int costToCome; // la cantidad de movimientos hasta llegar hasta aca
 	
 	
+	public TableroControl(int[][] tablero, int x, int y, int[] colors, Sink[] sinks) {
+		super();
+		this.tablero = tablero;
+		this.x = x;
+		this.y = y;
+		this.colors = colors;
+		this.sinks = sinks;
+	}
+
 	public TableroControl(int[][] tablero,int x, int y, int[] colors, Sink[] sinks, TableroControl[] children, int cost) {
 		this.tablero = tablero;
 		this.colors = colors;
