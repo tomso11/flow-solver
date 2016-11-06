@@ -56,7 +56,7 @@ public class Tablero {
 	}
 	
 	public boolean cellIsEmpty(Point cell){
-		if (cell.getX() > 0 && cell.getY() > 0 && cell.getX() < this.getCols() && cell.getY() < this.getFils() ){
+		if (cell.getX() >= 0 && cell.getY() >= 0 && cell.getX() < this.getCols() && cell.getY() < this.getFils() ){
 			if (tablero[(int) cell.getX()][(int) cell.getY()] == -1)
 				return true;
 		}
