@@ -24,7 +24,7 @@ public class ExactMethod {
 				parcialSolutions.addAll(findPath(each, sink[i], sink[i+1],tab.getColour(i/2),print));
 			}
 			solutions= parcialSolutions;
-			parcialSolutions = null;
+			parcialSolutions.removeAll(parcialSolutions);
 		}
 		
 		for (Tablero each : solutions ){
@@ -34,10 +34,19 @@ public class ExactMethod {
 				bestSolutionEmpty = eachEmpty;
 			}
 		}
-		
-		for ( int j = 0 ; j < tab.getFils(); j++ ){
-				System.out.println(bestSolution.getTablero()[j]);
-		}
+
+		System.out.println("Solution GameBoard:");
+		//for (Tablero each : solutions){
+			for (int x=0; x < 6; x++) {
+				System.out.print("|");
+				for (int y=0; y < 6 ; y++) {
+					System.out.print (bestSolution.getTablero()[x][y]);
+					if (y!=5) System.out.print("\t");
+				}
+				System.out.println("|");
+			}
+		//}
+
 		
 		time = System.currentTimeMillis() - time;
 		System.out.println("El algoritmo encontro la solucion exacta en " + time + " segundos.");
@@ -55,18 +64,18 @@ public class ExactMethod {
 		for (int i = 0 ; i < 8 ; i+=2){
 			Point cell = new Point ((int)origin.getX(),(int)origin.getY());
 			cell.translate(movement[i], movement[i+1]);
-			if( tablero.cellIsEmpty(cell)){
-				if (print){
-					MainFrame draw = new MainFrame(tablero.getFils(),tablero.getCols(),tablero.getTablero());
-					draw.setVisible(true);
-					try{
-						Thread.sleep(100);
-					}catch(InterruptedException ex){
-						Thread.currentThread().interrupt();
+				if( tablero.cellIsEmpty(cell)){
+					if (print){
+						MainFrame draw = new MainFrame(tablero.getFils(),tablero.getCols(),tablero.getTablero());
+						draw.setVisible(true);
+						try{
+							Thread.sleep(100);
+						}catch(InterruptedException ex){
+							Thread.currentThread().interrupt();
+						}
 					}
-				}
-				tablero.paintCell(cell,colour);
-				solutions.addAll(findPath(tablero,cell,destiny,colour,print));
+					tablero.paintCell(cell,colour);
+					solutions.addAll(findPath(tablero,cell,destiny,colour,print));
 			}
 		}
 		return solutions;
