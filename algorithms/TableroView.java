@@ -5,89 +5,66 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-public class TableroView extends JPanel implements ComponentListener , ActionListener{
+public class TableroView extends JPanel implements ComponentListener , ActionListener {
+    
 	private static final long serialVersionUID = 1L;
-	private JLabel mTitle = null;
+	private JButton mTitle = null;
 	private JButton[][] mCasillas = null ;
-	private JButton mBusEx = null;
-	private JButton mBusAp = null;
-    	private int mNumeroDeFilas = 6 ;
-    	private int mNumeroDeColumnas = 6 ;
-    	private int mSeparacion = 2 ;
-    	private int mAlturaBotones = 50 ;
-    	private int mAlturaInicio = 30 ;
+    private int mNumeroDeFilas;
+    private int mNumeroDeColumnas;
+    private int mSeparacion = 2 ;
+    private int mAlturaInicio = 30 ;
     
-    public TableroView() {        
-        this.setBackground(Color.BLACK);
-        this.setLayout(null);              
-    }
-    
-    
-    public void inicializar(int[][] tablero) {
+    public void inicializar(int[][] tablero,int fils, int cols) {
+    	mNumeroDeFilas = fils;
+    	mNumeroDeColumnas = cols;
         mCasillas = new JButton[mNumeroDeFilas][mNumeroDeColumnas];
         for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
         	for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
         		JButton temp = new JButton();
         		temp.addActionListener(this);
-        		temp.setText("[" + fila + "," + columna + "]");                            
+        		temp.setText("");                            
         		mCasillas[fila][columna] = temp;                        
                 this.add(temp);
                 mCasillas[fila][columna].setOpaque(true);
                 this.pintarCasilla(fila, columna, tablero[fila][columna]);
             }
         }
-        mCasillas[3][3].setOpaque(true);
-        mCasillas[3][3].setBackground(Color.YELLOW);
-        mTitle = new JLabel ("'Free Flow Game Solver'");
-        mTitle.setForeground(Color.WHITE);
+        mTitle = new JButton ("Free Flow Game Solver:");
+        mTitle.setForeground(Color.BLACK);
         add(mTitle);
 
-        mBusEx = new JButton("Busqueda Exacta");
-        add(mBusEx);
-        
-        mBusAp = new JButton("Busqueda Aproximada");
-        add(mBusAp);
     }
+    
     public void acomodar() {
         
         int ancho = this.getWidth();
-        int alto = this.getHeight()- mAlturaInicio * 3 - mAlturaBotones;
+        int alto = this.getHeight()- mAlturaInicio * 3 - 50;
         int dimensionMenor = Math.min( ancho , alto );
-        int altoTitle = alto/15;
-        int altoBotones = alto/12;
-        int anchoBotones = ancho/3;
+        int altoTitle = alto/10;
         int anchoDeCasilla = dimensionMenor / mNumeroDeColumnas ; 
         int altoDeCasilla = dimensionMenor / mNumeroDeFilas ;
         int xOffset = (ancho - dimensionMenor) / 2 ; 
         int yOffset = (alto - dimensionMenor) / 2 ; 
         
-        JLabel title = mTitle;
+        JButton title = mTitle;
         title.setBounds(0,0,ancho,altoTitle);
         title.setFont(new java.awt.Font("Tahoma", 0, dimensionMenor/15)); 
-        
-        JButton busEx = mBusEx;
-        busEx.setBounds(0, altoTitle*2, anchoBotones, altoBotones);
-        busEx.setFont(new java.awt.Font("Tahoma", 0, dimensionMenor/30));
-        
-        JButton busAp = mBusAp;
-        busAp.setBounds(anchoBotones*2, altoTitle*2, anchoBotones, altoBotones);
-        busAp.setFont(new java.awt.Font("Tahoma", 0, dimensionMenor/30));
    
         for( int fila = 0 ; fila < mNumeroDeFilas ; fila ++ ) {
                for( int columna = 0 ; columna < mNumeroDeColumnas ; columna ++ ) {
                   JButton temp = mCasillas[fila][columna] ;
-                  temp.setBackground(Color.BLACK);
-                  temp.setBounds(xOffset + columna * anchoDeCasilla , yOffset + fila * altoDeCasilla +  altoBotones + altoTitle * 3 , anchoDeCasilla - mSeparacion, altoDeCasilla - mSeparacion );
+                  temp.setBounds(xOffset + columna * anchoDeCasilla , yOffset + fila * altoDeCasilla + altoTitle * 2 , anchoDeCasilla - mSeparacion, altoDeCasilla - mSeparacion );
                }
         }
     }
-
-    public void componentResized(ComponentEvent e) {
-        this.acomodar();
+    
+    public TableroView() {        
+        this.setBackground(Color.BLACK);
+        this.addComponentListener(this);
+        this.setLayout(null);              
     }
 
     public void setNumeroDeFilas(int mNumeroDeFilas) {
@@ -108,44 +85,65 @@ public class TableroView extends JPanel implements ComponentListener , ActionLis
     
     public void pintarCasilla(int fila, int columna, int color){
     	switch(color){
-    		case '0': 
-                mCasillas[fila][columna].setForeground(Color.WHITE);
+    		case -1: 
+    			mCasillas[fila][columna].setBackground(Color.BLACK);
+                mCasillas[fila][columna].setOpaque(true);
                 break;
-    		case '1': 
-                mCasillas[fila][columna].setForeground(Color.YELLOW);
+    		case 0: 
+                mCasillas[fila][columna].setBackground(Color.WHITE);
+                mCasillas[fila][columna].setOpaque(true);
                 break;
-    		case '2': 
-                mCasillas[fila][columna].setForeground(Color.ORANGE);
+    		case 1: 
+                mCasillas[fila][columna].setBackground(Color.YELLOW);
+                mCasillas[fila][columna].setOpaque(true);
                 break;
-    		case '3': 
-                mCasillas[fila][columna].setForeground(Color.RED);
+    		case 2: 
+                mCasillas[fila][columna].setBackground(Color.DARK_GRAY);
+                mCasillas[fila][columna].setOpaque(true);
                 break;
-    		case '4': 
-                mCasillas[fila][columna].setForeground(Color.MAGENTA);
+    		case 3: 
+                mCasillas[fila][columna].setBackground(Color.RED);
+                mCasillas[fila][columna].setOpaque(true);
                 break;
-    		case '5': 
-                mCasillas[fila][columna].setForeground(Color.BLUE);
+    		case 4: 
+                mCasillas[fila][columna].setBackground(Color.MAGENTA);
+                mCasillas[fila][columna].setOpaque(true);
                 break;
-    		case '6': 
-                mCasillas[fila][columna].setForeground(Color.CYAN);
+    		case 5: 
+                mCasillas[fila][columna].setBackground(Color.BLUE);
+                mCasillas[fila][columna].setOpaque(true);
                 break;
-    		case '7': 
-                mCasillas[fila][columna].setForeground(Color.GREEN);
+    		case 6: 
+                mCasillas[fila][columna].setBackground(Color.CYAN);
+                mCasillas[fila][columna].setOpaque(true);
                 break;
-    		case '8': 
-                mCasillas[fila][columna].setForeground(Color.GRAY);
+    		case 7: 
+                mCasillas[fila][columna].setBackground(Color.GREEN);
+                mCasillas[fila][columna].setOpaque(true);
                 break;
-    		case '9': 
-                mCasillas[fila][columna].setForeground(Color.PINK);
+    		case 8: 
+                mCasillas[fila][columna].setBackground(Color.GRAY);
+                mCasillas[fila][columna].setOpaque(true);
+                break;
+    		case 9: 
+                mCasillas[fila][columna].setBackground(Color.PINK);
+                mCasillas[fila][columna].setOpaque(true);
                 break;
     	}
     }
+    
+    public void componentResized(ComponentEvent e) {
+        this.acomodar();
+    }
 
-	public void actionPerformed(ActionEvent arg0) {}
+    public void componentMoved(ComponentEvent e) {
+    }
 
-	public void componentHidden(ComponentEvent arg0) {}
+    public void componentShown(ComponentEvent e) {
+    }
 
-	public void componentMoved(ComponentEvent arg0) {}
-
-	public void componentShown(ComponentEvent arg0) {}
+    public void componentHidden(ComponentEvent e) {
+    }
+    public void actionPerformed(ActionEvent e) {        
+    }
 }
