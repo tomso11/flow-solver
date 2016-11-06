@@ -14,63 +14,10 @@ public class HCInput {
 		this.sinks=sinks;
 	}
 	
-	//Lee's Algorithm
-	public void quickSolution(){
-		int[][] grid=tab.getTablero();
-		for(int i=0; i<sinks.length ; i++){
-			int x1=sinks[i].getFirstX();
-			int y1=sinks[i].getFirstY();
-			int x2=sinks[i].getSecX();
-			int y2=sinks[i].getSecY();
-			grid=markMatrix(x1,y1,x2,y2,grid,sinks[i].getColor());
-			// llamar hill climbing
-		}
-		//al terminar este for lo enviamos al hill climbing
-	}
-
-	private int[][] markMatrix(int x1, int y1, int x2, int y2, int[][] grid,int color) {
-		if( (x1+1==x2 && y1==y2) || (x1-1==x2 && y1==y2) || (x1==x2 && y1-1==y2) || (x1==x2 && y1+1==y2) ){
-			grid=markPath(x1,y1,x2,y2,grid,color);
-			grid=clearGrid(grid);
-			System.out.println("THIS PRINT");
-			printMatrix(grid);
-			return grid;
-		}
-		 // solo marco si esta sin color
-		if( x1 != 0 && grid[x1-1][y1] == -1){
-			grid[x1-1][y1]=(grid[x1][y1] >= 10)? (grid[x1][y1]+1):(10); // si la anterior tiene numero le agrego peso, sino, comienzo el camino 
-			printMatrix(grid);
-			grid=markMatrix(x1-1,y1,x2,y2,grid, color);
-			printMatrix(grid);
-		}
-		if( x1 != tab.getX()-1 && grid[x1+1][y1]== -1){
-			grid[x1+1][y1]=(grid[x1][y1] >= 10)? (grid[x1][y1]+1):(10);
-			printMatrix(grid);
-			grid=markMatrix(x1+1,y1,x2,y2,grid, color);
-			printMatrix(grid);
-		}printMatrix(grid);
-		if( y1 != 0 && grid[x1][y1-1]== -1){
-			grid[x1][y1-1]=(grid[x1][y1] >= 10)? (grid[x1][y1]+1):(10);
-			printMatrix(grid);
-			grid=markMatrix(x1,y1-1,x2,y2,grid, color);
-			printMatrix(grid);
-		}
-		if( y1 != tab.getY()-1 && grid[x1][y1+1]== -1){
-			grid[x1][y1+1]=(grid[x1][y1] >= 10)? (grid[x1][y1]+1):(10);
-			printMatrix(grid);
-			grid=markMatrix(x1,y1+1,x2,y2,grid, color);
-			printMatrix(grid);
-		}
-
-		printMatrix(grid);
-		return grid; // provisorio
-
-		// aca habria que mandarlo directo al hill climbing
-	}
 
 	private int[][] clearGrid(int[][] grid) {
-		for(int i=0; i<tab.getY(); i++){
-			for(int j=0 ; j<tab.getX(); j++){
+		for(int i=0; i<tab.getX(); i++){
+			for(int j=0 ; j<tab.getY(); j++){
 				if(grid[i][j]>= 10){
 					grid[i][j]=-1;
 				}
@@ -79,51 +26,11 @@ public class HCInput {
 		return grid;
 	}
 
-	private int[][] markPath(int x1, int y1, int x2, int y2, int[][] grid, int color) {
-		int x=x2,y=y2;
-		Cell min = new Cell(-1,-1,tab.getX() * tab.getY()); // celda a la que nos vamos a mover
-		while( grid[x][y] >= 10 ){
-			if( x != 0 && grid[x-1][y]>=10 ){
-				if( grid[x-1][y] < min.getColor() ){
-					min.setX(x-1);
-					min.setY(y);
-					min.setColor(grid[x-1][y]);
-				}
-			}
-			if( x != tab.getX()-1 && grid[x+1][y]>=10 ){
-				if( grid[x+1][y] < min.getColor() ){
-					min.setX(x+1);
-					min.setY(y);
-					min.setColor(grid[x+1][y]);
-				}
-			}
-			if( y != 0 && grid[x][y-1]>=10 ){
-				if( grid[x][y-1] < min.getColor() ){
-					min.setX(x);
-					min.setY(y-1);
-					min.setColor(grid[x][y-1]);
-				}
-			}
-			if( y != tab.getY()-1 && grid[x][y+1]>=10 ){
-				if( grid[x][y+1] < min.getColor() ){
-					min.setX(x);
-					min.setY(y+1);
-					min.setColor(grid[x][y+1]);
-				}
-			}
-			printMatrix(grid);
-			grid[x][y]=color; // como los colores van de 0 a 9 cuando llegue a 10 y lo pinte cortara la iteracion
-			x=min.getX();
-			y=min.getY();
-		}
-		return grid;
-		
-	}
 	
 	public void printMatrix(int[][] grid){
 		System.out.println("Matrix print:");
-		for(int i=0; i<tab.getY(); i++){
-			for(int j=0; j<tab.getX(); j++){
+		for(int i=0; i<tab.getX(); i++){
+			for(int j=0; j<tab.getY(); j++){
 				System.out.print(grid[i][j] + " ");
 			}
 			System.out.println();
@@ -133,11 +40,13 @@ public class HCInput {
 	}
 	
 	public static void main(String[] args) {
-		int[][] grid ={{-1, 0, -1, -1, -1, -1},{-1, -1, -1, -1, -1, -1},{-1, -1, -1, -1, -1, -1}, {-1,-1,-1,-1,-1,-1} , {-1,-1,-1,-1,-1,-1}, {-1,-1,-1,-1,0,-1}};
+		int[][] grid ={{1, 0, -1, -1, -1},{-1, -1, -1, -1, -1},{-1, -1, -1, -1, -1}, {-1,-1,-1,-1,-1} , {-1,-1,-1,-1,-1}, {2,1,-1,2,0}};
 		Sink sink=new Sink(0,1,5,4,0);
-		Sink[] sinks={sink};
-		int[] colors={0};
-		TableroControl tab=new TableroControl(grid, 6, 6, colors, sinks);
+		Sink sink2=new Sink(0,0,5,1,1);
+		Sink sink3=new Sink(5,0,5,3,2);
+		Sink[] sinks={sink,sink2,sink3};
+		int[] colors={0,1,2};
+		TableroControl tab=new TableroControl(grid, 6, 5, colors, sinks);
 		HCInput input=new HCInput(tab,sinks);
 		//input.quickSolution();
 		input.queueSolution();
@@ -178,6 +87,7 @@ public class HCInput {
 			System.out.println("wot");
 			queue=emptyQ(queue);
 			printMatrix(grid);
+			found=false;
 		}
 		return grid;
 	}
@@ -285,4 +195,98 @@ public class HCInput {
 		}
 		return queue;
 	}
+//	//Lee's Algorithm
+//	public void quickSolution(){
+//		int[][] grid=tab.getTablero();
+//		for(int i=0; i<sinks.length ; i++){
+//			int x1=sinks[i].getFirstX();
+//			int y1=sinks[i].getFirstY();
+//			int x2=sinks[i].getSecX();
+//			int y2=sinks[i].getSecY();
+//			grid=markMatrix(x1,y1,x2,y2,grid,sinks[i].getColor());
+//			// llamar hill climbing
+//		}
+//		//al terminar este for lo enviamos al hill climbing
+//	}
+	
+//	private int[][] markMatrix(int x1, int y1, int x2, int y2, int[][] grid,int color) {
+//		if( (x1+1==x2 && y1==y2) || (x1-1==x2 && y1==y2) || (x1==x2 && y1-1==y2) || (x1==x2 && y1+1==y2) ){
+//			grid=markPath(x1,y1,x2,y2,grid,color);
+//			grid=clearGrid(grid);
+//			System.out.println("THIS PRINT");
+//			printMatrix(grid);
+//			return grid;
+//		}
+//		 // solo marco si esta sin color
+//		if( x1 != 0 && grid[x1-1][y1] == -1){
+//			grid[x1-1][y1]=(grid[x1][y1] >= 10)? (grid[x1][y1]+1):(10); // si la anterior tiene numero le agrego peso, sino, comienzo el camino 
+//			printMatrix(grid);
+//			grid=markMatrix(x1-1,y1,x2,y2,grid, color);
+//			printMatrix(grid);
+//		}
+//		if( x1 != tab.getX()-1 && grid[x1+1][y1]== -1){
+//			grid[x1+1][y1]=(grid[x1][y1] >= 10)? (grid[x1][y1]+1):(10);
+//			printMatrix(grid);
+//			grid=markMatrix(x1+1,y1,x2,y2,grid, color);
+//			printMatrix(grid);
+//		}printMatrix(grid);
+//		if( y1 != 0 && grid[x1][y1-1]== -1){
+//			grid[x1][y1-1]=(grid[x1][y1] >= 10)? (grid[x1][y1]+1):(10);
+//			printMatrix(grid);
+//			grid=markMatrix(x1,y1-1,x2,y2,grid, color);
+//			printMatrix(grid);
+//		}
+//		if( y1 != tab.getY()-1 && grid[x1][y1+1]== -1){
+//			grid[x1][y1+1]=(grid[x1][y1] >= 10)? (grid[x1][y1]+1):(10);
+//			printMatrix(grid);
+//			grid=markMatrix(x1,y1+1,x2,y2,grid, color);
+//			printMatrix(grid);
+//		}
+//
+//		printMatrix(grid);
+//		return grid; // provisorio
+//
+//		// aca habria que mandarlo directo al hill climbing
+//	}
+	
+//	private int[][] markPath(int x1, int y1, int x2, int y2, int[][] grid, int color) {
+//		int x=x2,y=y2;
+//		Cell min = new Cell(-1,-1,tab.getX() * tab.getY()); // celda a la que nos vamos a mover
+//		while( grid[x][y] >= 10 ){
+//			if( x != 0 && grid[x-1][y]>=10 ){
+//				if( grid[x-1][y] < min.getColor() ){
+//					min.setX(x-1);
+//					min.setY(y);
+//					min.setColor(grid[x-1][y]);
+//				}
+//			}
+//			if( x != tab.getX()-1 && grid[x+1][y]>=10 ){
+//				if( grid[x+1][y] < min.getColor() ){
+//					min.setX(x+1);
+//					min.setY(y);
+//					min.setColor(grid[x+1][y]);
+//				}
+//			}
+//			if( y != 0 && grid[x][y-1]>=10 ){
+//				if( grid[x][y-1] < min.getColor() ){
+//					min.setX(x);
+//					min.setY(y-1);
+//					min.setColor(grid[x][y-1]);
+//				}
+//			}
+//			if( y != tab.getY()-1 && grid[x][y+1]>=10 ){
+//				if( grid[x][y+1] < min.getColor() ){
+//					min.setX(x);
+//					min.setY(y+1);
+//					min.setColor(grid[x][y+1]);
+//				}
+//			}
+//			printMatrix(grid);
+//			grid[x][y]=color; // como los colores van de 0 a 9 cuando llegue a 10 y lo pinte cortara la iteracion
+//			x=min.getX();
+//			y=min.getY();
+//		}
+//		return grid;
+//		
+//	}
 }
