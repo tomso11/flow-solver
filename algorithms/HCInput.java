@@ -185,9 +185,20 @@ public class HCInput {
 			check=!( (min.getX() == x2) && (min.getY() == y2) );
 		}
 		System.out.println("largo del camino: "+ pathLength);
+		addPath(source, pathLength); // agrega la longitud del camino al objeto
 		return grid;
 		
 	}
+
+	private void addPath(Cell source, int pathLength) {
+		int x=source.getX(), y=source.getY();
+		for(int i=0; i<sinks.length; i++){
+			if( ( x==sinks[i].getFirstX() && y==sinks[i].getFirstY() ) || ( x==sinks[i].getSecX() && y==sinks[i].getSecY() ) ){
+				sinks[i].setPathLength(pathLength);
+			}
+		}
+	}
+
 
 	private LinkedList<Cell> emptyQ(LinkedList<Cell> queue) {
 		while(! queue.isEmpty() ){

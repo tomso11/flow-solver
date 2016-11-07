@@ -2,7 +2,7 @@ package algorithms;
 
 public class Sink {
 	
-	private int x1, y1, x2, y2, color;
+	private int x1, y1, x2, y2, color,pathLength;
 
 	public Sink(int x, int y, int x2, int y2, int color) {
 		this.x1 = x;
@@ -10,6 +10,7 @@ public class Sink {
 		this.x2 = x2;
 		this.y2 = y2;
 		this.color = color;
+		this.pathLength=0;
 	}
 
 	public int getFirstX() {
@@ -52,6 +53,14 @@ public class Sink {
 		this.color = color;
 	}
 	
+	
+	public int getPathLength() {
+		return pathLength;
+	}
+	
+	public void setPathLength(int pathLength) {
+		this.pathLength = pathLength;
+	}
 	
 
 }
