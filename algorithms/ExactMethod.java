@@ -24,7 +24,7 @@ public class ExactMethod {
 			System.out.println(finalSolution.size());
 			
 			if (tab.getColour(i/2) == 3){
-				solutions.get(0);
+				solutions.get(2);
 			for (Tablero each : solutions){
 				for (int x=0; x < 6; x++) {
 					System.out.print("|");
@@ -101,9 +101,9 @@ public class ExactMethod {
 								Thread.currentThread().interrupt();
 							}
 							draw.dispose();	
+						finalSolution.add(tablero);
 						if(!origin.equals(current))
 							tablero.paintCell(current, -1);
-						finalSolution.add(tablero);
 						return;
 					}
 					
