@@ -115,3 +115,4 @@ public class Tablero {
 		return this.getFils()+this.getCols();
 	}
 }
+
