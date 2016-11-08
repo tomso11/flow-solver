@@ -9,9 +9,9 @@ import javax.swing.JPanel;
 
 public class TableroView extends JPanel implements ComponentListener , ActionListener {
     
-    private static final long serialVersionUID = 1L;
-    private JButton mTitle = null;
-    private JButton[][] mCasillas = null ;
+	private static final long serialVersionUID = 1L;
+	private JButton mTitle = null;
+	private JButton[][] mCasillas = null ;
     private int mNumeroDeFilas;
     private int mNumeroDeColumnas;
     private int mSeparacion = 2 ;
