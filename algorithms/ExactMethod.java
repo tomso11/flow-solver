@@ -68,7 +68,6 @@ public class ExactMethod {
 	}
 
 	public void findPath(Tablero tablero,Point origin,Point current, Point destiny, int colour, boolean print,List<Tablero> finalSolution){
-		List<Tablero> solutions = new ArrayList<Tablero>();
 		int [] movement = {-1,0,0,1,1,0,0,-1};		
 		Point cell = new Point();
 		if (current == null){
@@ -97,12 +96,13 @@ public class ExactMethod {
 							draw.setVisible(true);
 							draw.setVisible(true);
 							try{
-								Thread.sleep(200);
+								Thread.sleep(100);
 							}catch(InterruptedException ex){
 								Thread.currentThread().interrupt();
 							}
 							draw.dispose();	
-						tablero.paintCell(current, -1);
+						if(!origin.equals(current))
+							tablero.paintCell(current, -1);
 						finalSolution.add(tablero);
 						return;
 					}
