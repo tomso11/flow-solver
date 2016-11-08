@@ -59,35 +59,37 @@ public class HCInput {
 		boolean found=false;
 		List<Cell> neighbors=new ArrayList<Cell>();
 		for(int i=0; i< sinks.length ; i++){ 
-			Cell c=new Cell(sinks[i].getFirstX(),sinks[i].getFirstY(),sinks[i].getColor() );
-			Cell tgt=new Cell(sinks[i].getSecX(),sinks[i].getSecY(),sinks[i].getColor() );
-			System.out.println("las coordenadas de tgt son x: "+tgt.getX()+ " y: "+tgt.getY() );
-			queue.add(c);
-			while(!(queue.isEmpty()) ){
-				System.out.println("vamos otra vez");
-				Cell current= queue.poll();
-				System.out.println("busco vecinos de  x: "+current.getX()+ " y: "+current.getY() );
-				neighbors=getNeighbors(current, grid, tgt);
-				if(!(neighbors.isEmpty()) ){
-					for(int j=0; j< neighbors.size() && !found; j++){
-						System.out.println("las coordenadas de este neigh son x: "+neighbors.get(j).getX()+ " y: "+neighbors.get(j).getY() );
-						if((neighbors.get(j)).equals(tgt)){
-							grid=markPath(grid, tgt, c);
-							found=true;
-							queue=emptyQ(queue);
+			if(sinks[i].getPathLength() == 0){
+				Cell c=new Cell(sinks[i].getFirstX(),sinks[i].getFirstY(),sinks[i].getColor() );
+				Cell tgt=new Cell(sinks[i].getSecX(),sinks[i].getSecY(),sinks[i].getColor() );
+				System.out.println("las coordenadas de tgt son x: "+tgt.getX()+ " y: "+tgt.getY() );
+				queue.add(c);
+				while(!(queue.isEmpty()) ){
+					System.out.println("vamos otra vez");
+					Cell current= queue.poll();
+					System.out.println("busco vecinos de  x: "+current.getX()+ " y: "+current.getY() );
+					neighbors=getNeighbors(current, grid, tgt);
+					if(!(neighbors.isEmpty()) ){
+						for(int j=0; j< neighbors.size() && !found; j++){
+							System.out.println("las coordenadas de este neigh son x: "+neighbors.get(j).getX()+ " y: "+neighbors.get(j).getY() );
+							if((neighbors.get(j)).equals(tgt)){
+								grid=markPath(grid, tgt, c);
+								found=true;
+								queue=emptyQ(queue);
+							}
+							else{
+								queue.add(neighbors.get(j));
+								System.out.println("encolo");
+							}
 						}
-						else{
-							queue.add(neighbors.get(j));
-							System.out.println("encolo");
-						}
-					}
-				} // falta un else ?
+					} // falta un else ?
+				}
+				grid=clearGrid(grid);
+				System.out.println("wot");
+				queue=emptyQ(queue);
+				printMatrix(grid);
+				found=false;
 			}
-			grid=clearGrid(grid);
-			System.out.println("wot");
-			queue=emptyQ(queue);
-			printMatrix(grid);
-			found=false;
 		}
 		return grid;
 	}

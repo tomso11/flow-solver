@@ -12,6 +12,15 @@ public class Sink {
 		this.color = color;
 		this.pathLength=0;
 	}
+	
+	public Sink(int x, int y, int x2, int y2, int color, int pathLength) {
+		this.x1 = x;
+		this.y1 = y;
+		this.x2 = x2;
+		this.y2 = y2;
+		this.color = color;
+		this.pathLength=pathLength;
+	}
 
 	public int getFirstX() {
 		return x1;
