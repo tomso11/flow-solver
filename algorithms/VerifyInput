@@ -96,7 +96,7 @@ public class VerifyInput {
 			for (int x = 0 ; x < this.getFils() ; x++){
 				for (int y = 0 ; y < this.getCols() ; y++){
 					if (colours[k] == table[x][y]){
-						sinks[l++]= new Point(x,y);						
+						sinks[l++]= new Point(x,y);
 					}
 						
 				}
@@ -119,4 +119,3 @@ public class VerifyInput {
 		return table;
 	}
 }
-
