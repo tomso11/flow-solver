@@ -15,14 +15,15 @@ public class Game {
 		System.out.println("Free Flow Game Solver!");
 		System.out.println("Beggining GameBoard:");
 		
-		for (int x=0; x < 6; x++) {
+		for (int x=0; x < game.getFils(); x++) {
 			  System.out.print("|");
-			  for (int y=0; y < 6 ; y++) {
+			  for (int y=0; y < game.getCols() ; y++) {
 			    System.out.print (table[x][y]);
 			    if (y!=5) System.out.print("\t");
 			  }
 			  System.out.println("|");
 			}
+		
 		MainFrame window0 = new MainFrame(game.getFils(),game.getCols(),table);
         window0.setVisible(true);
 		Tablero tablero = new Tablero(table ,game.getFils(),game.getCols(),game.getColours(),game.getSinks());
