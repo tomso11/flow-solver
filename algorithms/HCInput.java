@@ -40,6 +40,7 @@ public class HCInput {
 	}
 	
 	public static void main(String[] args) {
+		long startTime=System.currentTimeMillis();
 		int[][] grid ={{1, 0, -1, -1, -1},{-1, -1, -1, -1, -1},{-1, -1, -1, -1, -1}, {-1,-1,-1,-1,-1} , {-1,-1,-1,-1,-1}, {2,1,-1,2,0}};
 		Sink sink=new Sink(0,1,5,4,0);
 		Sink sink2=new Sink(0,0,5,1,1);
@@ -50,6 +51,8 @@ public class HCInput {
 		HCInput input=new HCInput(tab,sinks);
 		//input.quickSolution();
 		input.queueSolution();
+		long endTime=System.currentTimeMillis();
+		System.out.println("El proceso tomo : "+ (endTime-startTime) +" ms");
 		
 	}
 	
