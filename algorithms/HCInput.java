@@ -136,6 +136,8 @@ public class HCInput {
 		int x=tgt.getX(),y=tgt.getY();
 		int x2=source.getX(), y2=source.getY();
 		int pathLength=0;
+		LinkedList<Cell> path=new LinkedList<Cell>();
+		path.add(tgt); // agregamos la celda por la que empezamos
 		Cell min = new Cell(-1,-1,tab.getX() * tab.getY()+10); // celda a la que nos vamos a mover
 		boolean check=!( (min.getX() == x2) && (min.getY() == y2) );
 		System.out.println("las coordenadas de este tgt son x: "+tgt.getX()+ " y: "+tgt.getY() );
@@ -180,6 +182,7 @@ public class HCInput {
 			grid[min.getX()][min.getY()]=tgt.getColor(); // como los colores van de 0 a 9 cuando llegue a 10 y lo pinte cortara la iteracion
 			x=min.getX();
 			y=min.getY();
+			path.add(new Cell(x,y,tgt.getColor())); // agregamos la celda al camino
 			System.out.println("las coordenadas de current son x: "+min.getX()+ " y: "+min.getY() +" y su color "+min.getColor());
 			printMatrix(grid);
 			pathLength++;
@@ -187,18 +190,24 @@ public class HCInput {
 			check=!( (min.getX() == x2) && (min.getY() == y2) );
 		}
 		System.out.println("largo del camino: "+ pathLength);
-		addPath(source, pathLength); // agrega la longitud del camino al objeto
+		if(pathLength > 0){
+			addPath(source, pathLength, path); // agrega la longitud y el camino al objeto
+		}
+		
+		
 		return grid;
 		
 	}
 
-	private void addPath(Cell source, int pathLength) {
+	private void addPath(Cell source, int pathLength, LinkedList<Cell> path) {
 		int x=source.getX(), y=source.getY();
 		for(int i=0; i<sinks.length; i++){
 			if( ( x==sinks[i].getFirstX() && y==sinks[i].getFirstY() ) || ( x==sinks[i].getSecX() && y==sinks[i].getSecY() ) ){
 				sinks[i].setPathLength(pathLength);
+				sinks[i].setPath(path);
 			}
 		}
+		
 	}
 
 

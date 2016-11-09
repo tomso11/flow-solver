@@ -1,8 +1,11 @@
 package algorithms;
 
+import java.util.LinkedList;
+
 public class Sink {
 	
 	private int x1, y1, x2, y2, color,pathLength;
+	private LinkedList<Cell> path;
 
 	public Sink(int x, int y, int x2, int y2, int color) {
 		this.x1 = x;
@@ -10,7 +13,6 @@ public class Sink {
 		this.x2 = x2;
 		this.y2 = y2;
 		this.color = color;
-		this.pathLength=0;
 	}
 	
 	public Sink(int x, int y, int x2, int y2, int color, int pathLength) {
@@ -20,6 +22,16 @@ public class Sink {
 		this.y2 = y2;
 		this.color = color;
 		this.pathLength=pathLength;
+	}
+	
+	public Sink(int x, int y, int x2, int y2, int color, int pathLength, LinkedList<Cell> path) {
+		this.x1 = x;
+		this.y1 = y;
+		this.x2 = x2;
+		this.y2 = y2;
+		this.color = color;
+		this.pathLength=pathLength;
+		this.path=path;
 	}
 
 	public int getFirstX() {
@@ -69,6 +81,14 @@ public class Sink {
 	
 	public void setPathLength(int pathLength) {
 		this.pathLength = pathLength;
+	}
+
+	public LinkedList<Cell> getPath() {
+		return path;
+	}
+
+	public void setPath(LinkedList<Cell> path) {
+		this.path = path;
 	}
 	
 
