@@ -1,6 +1,7 @@
 package algorithms;
 
 import java.awt.Point;
+import java.util.LinkedList;
 
 public class VerifyInput {
 	 private static int fils;
@@ -94,26 +95,26 @@ public class VerifyInput {
 		return nColours;
 	}
 	
-	public Sink[] getSinksInstance(){
-		Sink[] sinks = new Sink[getNumberOfColours()];
+	public LinkedList<Sink> getSinksInstance(){
+		LinkedList<Sink> sinks = new LinkedList<Sink>();
 		int[] colors = getColours();
 		int[][] tab=getTable();
 		boolean firstSink=true,secSink=false;
 		for(int k=0; k < colors.length ; k++){ // habra un sink por cada color 
-			sinks[k]=new Sink(-1, -1, -1, -1, colors[k]); // creamos un sink "general" que luego modificaremos
+			sinks.add( new Sink(-1, -1, -1, -1, colors[k]) ); // creamos un sink "general" que luego modificaremos
 			for( int i=0 ; i< getFils() ; i++){ //recorremos la matriz por cada color
 				for( int j=0 ; j< getCols() ; j++){
 					// si logramos matchear el color con un casillero, lo agregaremos a la primera o segunda coordenada del sink segun corresponda
 					if (colors[k] == tab[i][j]){ 
 						if(firstSink){
-							sinks[k].setFirstX(i);
-							sinks[k].setFirstY(j);
+							sinks.get(k).setFirstX(i);
+							sinks.get(k).setFirstY(j);
 							firstSink=false;
 							secSink=true;
 						}
 						else{
-							sinks[k].setSecX(i);
-							sinks[k].setSecY(j);
+							sinks.get(k).setSecX(i);
+							sinks.get(k).setSecY(j);
 						}
 					}
 				}
