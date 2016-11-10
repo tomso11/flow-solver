@@ -111,8 +111,19 @@ public class Tablero {
 		return true;
 		}
 	
+	public Tablero clone(){
+
+		  final int[][] clonedTablero = new int[fils][cols];
+		  for (int x=0; x < this.getCols(); x++) {
+		    for (int y=0; y < this.getFils() ; y++) {
+		      clonedTablero[x][y] = tablero[x][y];
+		    }
+		  } 
+		  final Tablero tab = new Tablero(tablero,fils,cols,colours,sinks);
+		  return tab;
+		}
+	
 	public int hashcode(){
 		return this.getFils()+this.getCols();
 	}
 }
-
