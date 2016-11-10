@@ -9,7 +9,7 @@ public class Game {
 		String progress= "progress";
 		Reader a = new Reader();
 		VerifyInput game = new VerifyInput();
-		String text = a.readTxt("C:\\Users\\flor\\Desktop\\Facu\\Eclipse\\flow-solver\\algorithms\\Tablero.txt");
+		String text = a.readTxt("C:\\Users\\favarela\\Desktop\\flow-solver\\algorithms\\Tablero.txt");
 		if (game.input(text)){
 		int[][] table = VerifyInput.getTable();
 		System.out.println("Free Flow Game Solver!");
