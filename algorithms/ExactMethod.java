@@ -23,19 +23,19 @@ public class ExactMethod {
 			System.out.println(solutions.size());
 			System.out.println(finalSolution.size());
 			
-			if (tab.getColour(i/2) == 3){
-				solutions.get(2);
-			for (Tablero each : solutions){
-				for (int x=0; x < 6; x++) {
-					System.out.print("|");
-					for (int y=0; y < 6 ; y++) {
-						System.out.print (each.getTablero()[x][y]);
-						if (y!=5) System.out.print("\t");
-					}
-					System.out.println("|");
-				}
-			}
-			}
+			//if (tab.getColour(i/2) == 3){
+			//	solutions.get(2);
+			//for (Tablero each : solutions){
+			//	for (int x=0; x < 6; x++) {
+			//		System.out.print("|");
+			//		for (int y=0; y < 6 ; y++) {
+			//			System.out.print (each.getTablero()[x][y]);
+			//			if (y!=5) System.out.print("\t");
+			//		}
+			//		System.out.println("|");
+			//	}
+			//}
+			//}
 			
 			for (Tablero each: solutions){
 				findPath(each, sink[i],null ,sink[i+1],tab.getColour(i/2),print,finalSolution);
@@ -92,16 +92,17 @@ public class ExactMethod {
 					findPath(tablero,origin,cell,destiny,colour,print,finalSolution);
 				}else{
 					if (cell.equals(destiny) ){
-							MainFrame draw = new MainFrame(tablero.getFils(),tablero.getCols(),tablero.getTablero());
-							draw.setVisible(true);
-							draw.setVisible(true);
-							try{
-								Thread.sleep(100);
-							}catch(InterruptedException ex){
-								Thread.currentThread().interrupt();
-							}
-							draw.dispose();	
-						finalSolution.add(tablero);
+							//MainFrame draw = new MainFrame(tablero.getFils(),tablero.getCols(),tablero.getTablero());
+							//draw.setVisible(true);
+							//draw.setVisible(true);
+							//try{
+							//	Thread.sleep(100);
+							//}catch(InterruptedException ex){
+							//	Thread.currentThread().interrupt();
+							//}
+							//draw.dispose();	
+						Tablero oneSolution = tablero.clone();
+						finalSolution.add(oneSolution);
 						if(!origin.equals(current))
 							tablero.paintCell(current, -1);
 						return;
