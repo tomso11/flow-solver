@@ -3,10 +3,11 @@ package algorithms;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import climb.Cell;
+import climb.Sink;
+
 
 public class HillClimb {
-	
-
 	private static int fillPath(int x, int y, int color, Cell target, int i, LinkedList<Cell> path) {
 		if (x == target.getX()) {
 			
@@ -47,10 +48,20 @@ public class HillClimb {
 	}
 	
 	
-
 	private static int[][] removeRemainPath(LinkedList<Cell> cells, LinkedList<Cell> path, int tablero[][], int fils, int cols, int color, boolean remove) {
 
 		LinkedList<Cell> subPath = new LinkedList<Cell>();
+
+		
+		Cell intersecA = cells.get(1);
+		Cell intersecB = cells.get(2);
+		Cell targetA = cells.get(0);
+		Cell targetB = null;
+		if (cells.size() == 4) {
+			targetB = cells.get(3);
+		}
+		
+
 		
 		for (Cell current: path) {
 			
@@ -75,57 +86,84 @@ public class HillClimb {
 		
 
 		
-		boolean stop = false;
+		boolean stop = false, limits = false, conditionA = false, conditionB = false, conditionInterA = false, conditionInterB = false;
 		int x = 0, y = 0;
+
 		
 		for (int i = 0; i < path.size() && !stop; i++) {
-			if (path.get(i).getX() == cells.get(1).getX() && path.get(i).getY() == cells.get(1).getY() || path.get(i).getX() == cells.get(2).getX() && path.get(i).getY() == cells.get(2).getY()) {
-				
+			
+			if (intersecA != null) {
+				conditionInterA = path.get(i).getX() == intersecA.getX() && path.get(i).getY() == intersecA.getY();
+			} else {
+				conditionInterA = false;
+			}
+			
+			if (intersecB != null) {
+				conditionInterB = path.get(i).getX() == intersecB.getX() && path.get(i).getY() == intersecB.getY();
+			} else {
+				conditionInterB = false;
+			}
+			
+			if (conditionInterA || conditionInterB) {
 				int dirs[][] = {{1,0},{-1,0},{0,-1},{0,1}};
 				int xAux = path.get(i).getX();
 				int yAux = path.get(i).getY();
 				
-				for(int k = 0; k < dirs.length; k++) {
-					
+				if (conditionInterA) {
+					intersecA = null;
+				} else {
+					intersecB = null;
+				}
+				
+				for(int k = 0; k < dirs.length; k++) {	
 					x = path.get(i).getX() + dirs[k][0];
 					y = path.get(i).getY() + dirs[k][1];
-					boolean limits = x < fils && x >= 0 && y < cols && y >= 0;
-					boolean condition = x == cells.get(0).getX() || y == cells.get(0).getY();
-					if (cells.size() == 4) {
-						condition = condition || x == cells.get(3).getX() || y == cells.get(3).getY();
-					}
-					Cell aux = new Cell(x, y, color);
-					condition = condition && !path.contains(aux);
+					limits = x < fils && x >= 0 && y < cols && y >= 0;
+					conditionA = x == targetA.getX() || y == targetA.getY();
 					
-					if (limits && tablero[x][y] == color && condition) {
+					if (targetB != null) {
+						conditionB = x == targetB.getX() || y == targetB.getY();
+					}
+					
+					Cell aux = new Cell(x, y, color);
+					
+					if (limits && tablero[x][y] == color && conditionA && !path.contains(aux)) {	
+//						if (targetB != null) {
+//							if (conditionA) {
+//								i = fillPath(x, y, color, targetA, i, path);
+//								targetA = null;
+//							} else {
+//								i = fillPath(x, y, color, targetB, i, path);
+//								targetB = null;
+//							}
+//						}
 						
-						i = fillPath(x, y, color, cells.get(0), i, path);
+						i = fillPath(x, y, color, targetA, i, path);
 						
 						int a = cells.get(0).getX();
 						int b = cells.get(0).getY();
 						
 						path.add(++i, new Cell(a, b, color));
 						
-						cells.remove(new Cell(xAux, yAux, color));
+						conditionA = false;
+						conditionB = false;
 						
-						for(k = 0; k < dirs.length; k++) {
-							
+						for(k = 0; k < dirs.length; k++) {	
 							x = a + dirs[k][0];
 							y = b + dirs[k][1];
 
 							limits = x < fils && x >= 0 && y < cols && y >= 0;
-							condition = x == cells.get(1).getX() || y == cells.get(1).getY();
-							if (cells.size() == 3) {
-								condition = x == cells.get(2).getX() || y == cells.get(2).getY();
-							}
+							Cell target = intersecA == null ? intersecB : intersecA;
+							conditionA = x == target.getX() || y == target.getY();
+//							if (cells.size() == 3) {
+//								condition = x == cells.get(2).getX() || y == cells.get(2).getY();
+//							}
 							aux = new Cell(x, y, color);
-							condition = condition && !path.contains(aux);
+							conditionA = conditionA && !path.contains(aux);
 							
-							if (limits && tablero[x][y] == color && condition) {
-								
-								i = fillPath(x, y, color, cells.get(1), i, path);
-							
-								
+							if (limits && tablero[x][y] == color && conditionA) {
+								System.out.println("asfasf");
+								i = fillPath(x, y, color, target, i, path);							
 								
 							}
 														
@@ -146,8 +184,9 @@ public class HillClimb {
 		return tablero;
 		
 	}
-	
 
+	
+	
 	public static int[][] climbSolution(int[][] tablero, int fils, int cols, LinkedList<Sink> sinks) {
 		boolean sinksCompleted = false;
 		LinkedList<String> dirs = new LinkedList<String>();
@@ -367,8 +406,6 @@ public class HillClimb {
 								}
 							}
 								
-							
-//							removeRemainPath(cells, new Cell(sinks.get(k).getFirstX(), sinks.get(k).getFirstY(), sinks.get(k).getColor()), null, tableroAux, fils, cols, sinks.get(k).getColor(), false);
 							removeRemainPath(cells, sinks.get(k).getPath(), tableroAux, fils, cols, sinks.get(k).getColor(), false);
 
 							//salgo de ambos for y avanzo hacia el siguiente sink
@@ -381,7 +418,5 @@ public class HillClimb {
 		}
 		return tableroAux;
 	}
-	
-	
 	
 }
