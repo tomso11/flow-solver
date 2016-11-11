@@ -25,7 +25,7 @@ public class Game {
 					System.out.print("|");
 			  		for (int y=0; y < game.getCols() ; y++) {
 			  			System.out.print (table[x][y]);
-			  			if (y!=5) System.out.print("\t");
+			  			if (y!=game.getCols()) System.out.print("\t");
 			  		}
 			  		System.out.println("|");
 				}
