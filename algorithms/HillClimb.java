@@ -54,7 +54,7 @@ public class HillClimb {
 
 	
 	
-	public static TableroControl climbSolution(int[][] tablero, int fils, int cols, LinkedList<Sink> sinks) {
+	public static TableroControl climbSolution(int[][] tablero, int fils, int cols, LinkedList<Sink> sinks, boolean progress) {
 		boolean sinksCompleted = false;
 		LinkedList<String> dirs = new LinkedList<String>();
 		LinkedList<Cell> cells = new LinkedList<Cell>();
@@ -188,6 +188,18 @@ public class HillClimb {
 						down = false;
 						right = false;
 						left = false;
+						
+						if(progress){
+							MainFrame draw = new MainFrame(fils, cols, tableroAux);
+							draw.setVisible(true);
+							draw.setVisible(true);
+							try{
+								Thread.sleep(200);
+							}catch(InterruptedException ex){
+								Thread.currentThread().interrupt();
+							}
+							draw.dispose();
+						}
 					}	
 				
 				}

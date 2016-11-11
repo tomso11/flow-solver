@@ -15,16 +15,30 @@ public class ApproxMethod {
 		int[][] grid;
 		int[][] best;
 		long took=0;
-		while(time> 0 && !tab.isSolved() ){
-			System.out.println("enter");
-			long start=System.currentTimeMillis();
+		tab=lee.getSolution(tab,time,progress);
+		long end;
+		long start=System.currentTimeMillis();
+		long auxT1 = 0, auxT2 = 0;
+		while(time > took && !tab.isSolved() ){
+			System.out.println("enter");;
 			// Escala hacia la solucion
 			// Falta agregarle el progress y time
-			tabClimb=HillClimb.climbSolution(tab.getTablero(), tab.getX(), tab.getY(), tab.getSinks());
-			
+			auxT1 = System.currentTimeMillis();
+			tabClimb=HillClimb.climbSolution(tab.getTablero(), tab.getX(), tab.getY(), tab.getSinks(), progress);
+			auxT2 = System.currentTimeMillis();
+			// Me dijo se el metodo climbSolution me tomo mas tiempo del permitido dentro del ciclo
+			if(auxT2 - auxT1 + took >= time) {
+				break;
+			}
 			// Si algun camino no estan conectado corre el Lee de nuevo para ver si puede conectar los que falta 
 			if(!tabClimb.isPathsConected()) {
+				auxT1 = System.currentTimeMillis();
 				tabClimb=lee.getSolution(tabClimb,time,progress);
+				auxT2 = System.currentTimeMillis();
+				// Me fijo si el metodo getSolution me tomo mas tiempo del permitido dentro del ciclo
+				if(auxT2 - auxT1 + took >= time) {
+					break;
+				}
 				tabClimbMax=tabClimb;
 			// Si estan todos conectados pregunta si el puntaje de la ultima escalada es mejor que el de maximo registrado
 			} else {
@@ -32,20 +46,8 @@ public class ApproxMethod {
 					tabClimbMax = tabClimb;
 				}
 			}
-	    	System.out.println();
-			for(int p = 0; p < tabClimb.getX(); p++) {
-				for(int o = 0; o < tabClimb.getY(); o++) {
-					if(tabClimb.getTablero()[p][o] == -1) {
-						System.out.print(" " + " ");
-					} else {
-						System.out.print(tabClimb.getTablero()[p][o] + " ");
-					}
-				}
-				System.out.println();
-			}
-			System.out.println();
-//			lee.printMatrix(auxTab.getTablero(),tab.getX(), tab.getY());
-			long end=System.currentTimeMillis();
+
+			end=System.currentTimeMillis();
 			took=end-start;
 			System.out.println("Current time: " +time);
 		}
