@@ -11,6 +11,7 @@ public class ApproxMethod {
 	public void approxSolution(TableroControl tab, long time, boolean progress){
 		TableroControl tabClimb;
 		TableroControl tabClimbMax = null;
+		long timeBest=0;
 		Lee lee=new Lee();
 		int[][] grid;
 		int[][] best;
@@ -20,7 +21,7 @@ public class ApproxMethod {
 		long start=System.currentTimeMillis();
 		long auxT1 = 0, auxT2 = 0;
 		while(time > took && !tab.isSolved() ){
-			System.out.println("enter");;
+			System.out.println("enter");
 			// Escala hacia la solucion
 			// Falta agregarle el progress y time
 			auxT1 = System.currentTimeMillis();
@@ -44,12 +45,12 @@ public class ApproxMethod {
 			} else {
 				if(tabClimb.getScore() >= tabClimbMax.getScore()) {
 					tabClimbMax = tabClimb;
+					timeBest=took;
 				}
 			}
 
 			end=System.currentTimeMillis();
 			took=end-start;
-			System.out.println("Current time: " +time);
 		}
 		System.out.println("Approx Solution GameBoard:\n");
 		for (int x=0; x < tab.getX(); x++) {
@@ -60,7 +61,7 @@ public class ApproxMethod {
 			}
 			System.out.println("|");
 		}
-		System.out.println("\nThe algorithm found the exact solution in " + time/60000 + " minutes," + (time%60000)/1000 + " seconds and " + (time%1000) +" milliseconds.");
+		System.out.println("\nThe algorithm found the exact solution in " + timeBest/60000 + " minutes," + (timeBest%60000)/1000 + " seconds and " + (timeBest%1000) +" milliseconds.");
 	}
 
 	public static void main(String[] args) {
