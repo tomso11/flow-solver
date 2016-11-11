@@ -10,13 +10,11 @@ public class ApproxMethod {
 	
 	public void approxSolution(TableroControl tab, long time, boolean progress){
 		TableroControl tabClimb= tab;
-		TableroControl tabClimbMax = null;
+		TableroControl tabClimbMax = tab;
 		long timeBest=0;
 		Lee lee=new Lee();
-		int[][] grid;
-		int[][] best;
 		long took=0;
-		tab=lee.getSolution(tab,time,progress);
+		tabClimb=lee.getSolution(tabClimb,time,progress);
 		long end;
 		long start=System.currentTimeMillis();
 		long auxT1 = 0, auxT2 = 0;
@@ -25,7 +23,7 @@ public class ApproxMethod {
 			// Escala hacia la solucion
 			// Falta agregarle el progress y time
 			auxT1 = System.currentTimeMillis();
-			tabClimb=HillClimb.climbSolution(tab.getTablero(), tab.getX(), tab.getY(), tab.getSinks(), progress);
+			tabClimb=HillClimb.climbSolution(tabClimb.getTablero(), tabClimb.getX(), tabClimb.getY(), tabClimb.getSinks(), progress);
 			auxT2 = System.currentTimeMillis();
 			// Me dijo se el metodo climbSolution me tomo mas tiempo del permitido dentro del ciclo
 			if(auxT2 - auxT1 + took >= time) {
