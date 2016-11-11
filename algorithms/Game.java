@@ -15,9 +15,10 @@ public class Game {
 		
 			if (game.input(text)){
 				int[][] table = VerifyInput.getTable();
+				TableroControl tab=game.getTableroInstance();
 				System.out.println("Free Flow Game Solver!");
-				System.out.println("Beggining GameBoard:");
-				Solver s= new Solver();
+				System.out.println("Beginning GameBoard:");
+				
 		
 				for (int x=0; x < game.getFils(); x++) {
 					System.out.print("|");
@@ -46,12 +47,13 @@ public class Game {
 				}
 				else if (args[1].equals(approx)){
 					Integer time=0;
+					ApproxMethod aprox= new ApproxMethod();
 					if ((args.length==3 || args.length==4) && isInt(args[2])){
 						time=Integer.parseInt(args[2]);
 						if(args.length==4 && args[3].equals(progress)){
-							s.solAprox(true, time); /*ACA INVOQUEN AL APROX CON EL TIEMPO Y EL PRINT*/
+							aprox.approxSolution(tab, time, true); /*ACA INVOQUEN AL APROX CON EL TIEMPO Y EL PRINT*/
 						}else if(args.length==3){
-							s.solAprox(false, time);  /*ACA INVOQUEN AL APROX CON EL TIEMPO Y SIN EL PRINT*/
+							aprox.approxSolution(tab, time, false);  /*ACA INVOQUEN AL APROX CON EL TIEMPO Y SIN EL PRINT*/
 						}else throw new  IllegalArgumentException();
 					}else throw new  IllegalArgumentException();
 			

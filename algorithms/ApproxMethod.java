@@ -8,20 +8,21 @@ public class ApproxMethod {
 		
 	}
 	
-	public void ApproxSolution(TableroControl tab, long time){
+	public void approxSolution(TableroControl tab, long time, boolean progress){
 		
-		Lee lee=new Lee(tab,tab.getSinks());
+		Lee lee=new Lee();
 		HillClimb hc=new HillClimb();
 		int[][] grid;
+		int[][] best;
 		long took=0;
 		System.out.println(time + "   " + took+ "   "+ tab.isSolved() );
 		while(time-took > 0 && !tab.isSolved() ){
 				System.out.println("enter");
 				long start=System.currentTimeMillis();
-				grid=lee.getSolution();
-				grid=hc.climbSolution(grid, tab.getX(), tab.getY(), tab.getSinks());
+				tab=lee.getSolution(tab);
+				grid=hc.climbSolution(tab.getTablero(), tab.getX(), tab.getY(), tab.getSinks());
 				tab.setTablero(grid);
-				lee.printMatrix(grid);
+				lee.printMatrix(grid,tab.getX(), tab.getY());
 				long end=System.currentTimeMillis();
 				took=end-start;
 				System.out.println("Current time: " +time);
@@ -41,6 +42,6 @@ public class ApproxMethod {
 		TableroControl tab=new TableroControl(grid, 6, 5, colors, sinks);
 		ApproxMethod app = new ApproxMethod();
 		long time=300000 * 10000000;
-		app.ApproxSolution(tab, time);
+		app.approxSolution(tab, time, false);
 	}
 }

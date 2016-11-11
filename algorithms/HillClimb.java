@@ -3,8 +3,8 @@ package algorithms;
 import java.util.Collections;
 import java.util.LinkedList;
 
-import climb.Cell;
-import climb.Sink;
+import algorithms.Cell;
+import algorithms.Sink;
 
 
 public class HillClimb {

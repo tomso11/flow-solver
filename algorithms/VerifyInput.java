@@ -126,7 +126,6 @@ public class VerifyInput {
 	}
 	
 	public TableroControl getTableroInstance(){
-		int emptyCells = getFils()*getCols()-getNumberOfColours()*2; // quiza lo usemos despues
 		return new TableroControl( getTable(), getFils(), getCols(), getColours(), getSinksInstance() );
 	}
 	public Point[] getSinks(){

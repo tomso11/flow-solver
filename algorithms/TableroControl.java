@@ -9,14 +9,11 @@ public class TableroControl {
 	private int y;
 	private int[] colors;
 	private LinkedList<Sink> sinks;
-	private TableroControl[] children;
 	private int emptyCells;
 	private int score;
-	private int costToCome; // la cantidad de movimientos hasta llegar hasta aca
 	
-	
+
 	public TableroControl(int[][] tablero, int x, int y, int[] colors, LinkedList<Sink> sinks) {
-		super();
 		this.tablero = tablero;
 		this.x = x;
 		this.y = y;
@@ -25,15 +22,11 @@ public class TableroControl {
 		calcEmptyCells();
 	}
 
-	public TableroControl(int[][] tablero,int x, int y, int[] colors, LinkedList<Sink> sinks, TableroControl[] children, int cost) {
+	public TableroControl(int[][] tablero,int x, int y, int[] colors, LinkedList<Sink> sinks, int score) {
 		this.tablero = tablero;
 		this.colors = colors;
 		this.sinks = sinks;
-		this.children = children;
 		calcEmptyCells();
-		this.costToCome=cost;
-		
-
 	}
 	
 	public int getX() {
@@ -76,26 +69,29 @@ public class TableroControl {
 		this.sinks = sinks;
 	}
 	
-	public TableroControl[] getChildren() {
-		return children;
-	}
-
-	public void setChildren(TableroControl[] children) {
-		this.children = children;
-	}
-
 	public int getEmptyCells() {
 		return emptyCells;
-	}
-
-	public void setEmptyCells(int emptyCells) {
-		this.emptyCells = emptyCells;
 	}
 
 	public boolean isSolved() {
 		return emptyCells == 0;
 	}
 
+	public int getScore() {
+		return score;
+	}
+	
+	public void setScore() {
+		int completePath=0;
+		int emptyCells=getEmptyCells();
+		for(int i=0; i<getSinks().size(); i++){
+			if(getSinks().get(i).getPathLength() > 0){
+				completePath++;
+			}
+		}
+		score=completePath*10-emptyCells;
+	}
+	
 	public void calcEmptyCells(){
 		int count = 0;
 		for(int i=0; i<x; i++){
@@ -106,6 +102,18 @@ public class TableroControl {
 			}
 		}
 		this.emptyCells=count;
+	}
+	
+	public void printTab(){
+		System.out.println("Tab print:");
+		for(int i=0; i<getX(); i++){
+			for(int j=0; j<getY(); j++){
+				System.out.print(tablero[i][j] + " ");
+			}
+			System.out.println();
+		}
+		System.out.println("Print end");
+		
 	}
 	
 //	@SuppressWarnings("null")

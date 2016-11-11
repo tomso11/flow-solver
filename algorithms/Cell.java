@@ -3,19 +3,12 @@ package algorithms;
 
 // falta el cmp
 public class Cell {
-	private int x, y, color, priority;
+	private int x, y, color;
 	
 	public Cell(int x, int y, int color){
 		this.x=x;
 		this.y=y;
 		this.color=color;
-	}
-	
-	public Cell(int x, int y, int color, int priority){
-		this.x=x;
-		this.y=y;
-		this.color=color;
-		this.priority=priority;
 	}
 	
 	public int getX() {
@@ -42,14 +35,6 @@ public class Cell {
 		this.color = color;
 	}
 
-	public int getPriority() {
-		return priority;
-	}
-
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
-	
 	
 
 	

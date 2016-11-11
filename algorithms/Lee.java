@@ -6,18 +6,14 @@ import java.util.List;
 
 public class Lee {
 
-	private TableroControl tab;
-	private LinkedList<Sink> sinks;
+	public Lee(){
 	
-	public Lee(TableroControl tab, LinkedList<Sink> sinks){
-		this.tab= tab;
-		this.sinks=sinks;
 	}
 	
 
-	public int[][] clearGrid(int[][] grid) {
-		for(int i=0; i<tab.getX(); i++){
-			for(int j=0 ; j<tab.getY(); j++){
+	public int[][] clearGrid(int[][] grid, int x, int y) {
+		for(int i=0; i<x; i++){
+			for(int j=0 ; j<y; j++){
 				if(grid[i][j]>= 10){
 					grid[i][j]=-1;
 				}
@@ -27,10 +23,10 @@ public class Lee {
 	}
 
 	
-	public void printMatrix(int[][] grid){
+	public void printMatrix(int[][] grid, int x, int y){
 		System.out.println("Matrix print:");
-		for(int i=0; i<tab.getX(); i++){
-			for(int j=0; j<tab.getY(); j++){
+		for(int i=0; i<x; i++){
+			for(int j=0; j<y; j++){
 				System.out.print(grid[i][j] + " ");
 			}
 			System.out.println();
@@ -51,35 +47,35 @@ public class Lee {
 		sinks.add(sink3);
 		int[] colors={0,1,2};
 		TableroControl tab=new TableroControl(grid, 6, 5, colors, sinks);
-		Lee input=new Lee(tab,sinks);
+		Lee input=new Lee();
 		//input.quickSolution();
-		input.getSolution();
+		input.getSolution(tab);
 		long endTime=System.currentTimeMillis();
 		System.out.println("El proceso tomo : "+ (endTime-startTime) +" ms");
 		
 	}
 	
-	public int[][] getSolution(){
+	public TableroControl getSolution(TableroControl tab){
 		LinkedList<Cell> queue = new LinkedList<Cell>();
 		int[][] grid = tab.getTablero();
 		boolean found=false;
 		List<Cell> neighbors=new ArrayList<Cell>();
-		for(int i=0; i< sinks.size() ; i++){ 
-			if(sinks.get(i).getPathLength() == 0){
-				Cell c=new Cell(sinks.get(i).getFirstX(),sinks.get(i).getFirstY(),sinks.get(i).getColor() );
-				Cell tgt=new Cell(sinks.get(i).getSecX(),sinks.get(i).getSecY(),sinks.get(i).getColor() );
+		for(int i=0; i< tab.getSinks().size() ; i++){ 
+			if(tab.getSinks().get(i).getPathLength() == 0){
+				Cell c=new Cell(tab.getSinks().get(i).getFirstX(),tab.getSinks().get(i).getFirstY(),tab.getSinks().get(i).getColor() );
+				Cell tgt=new Cell(tab.getSinks().get(i).getSecX(),tab.getSinks().get(i).getSecY(),tab.getSinks().get(i).getColor() );
 				System.out.println("las coordenadas de tgt son x: "+tgt.getX()+ " y: "+tgt.getY() );
 				queue.add(c);
 				while(!(queue.isEmpty()) ){
 					System.out.println("vamos otra vez");
 					Cell current= queue.poll();
 					System.out.println("busco vecinos de  x: "+current.getX()+ " y: "+current.getY() );
-					neighbors=getNeighbors(current, grid, tgt);
+					neighbors=getNeighbors(current, grid, tgt, tab.getX(), tab.getY() );
 					if(!(neighbors.isEmpty()) ){
 						for(int j=0; j< neighbors.size() && !found; j++){
 							System.out.println("las coordenadas de este neigh son x: "+neighbors.get(j).getX()+ " y: "+neighbors.get(j).getY() );
 							if((neighbors.get(j)).equals(tgt)){
-								grid=markPath(grid, tgt, c);
+								grid=markPath(tab, grid, tgt, c);
 								found=true;
 								queue=emptyQ(queue);
 							}
@@ -90,17 +86,18 @@ public class Lee {
 						}
 					} // falta un else ?
 				}
-				grid=clearGrid(grid);
+				grid=clearGrid( grid, tab.getX(), tab.getY());
 				System.out.println("wot");
 				queue=emptyQ(queue);
-				printMatrix(grid);
+				printMatrix(grid,tab.getX(),tab.getY());
 				found=false;
 			}
 		}
-		return grid;
+		tab.setTablero(grid);
+		return tab;
 	}
 
-	private List<Cell> getNeighbors(Cell current, int[][] grid, Cell tgt) {
+	private List<Cell> getNeighbors(Cell current, int[][] grid, Cell tgt, int x, int y) {
 		List<Cell> arr = new ArrayList<Cell>();
 		int x1=current.getX(),y1=current.getY();
 		int x2=tgt.getX(), y2=tgt.getY();
@@ -108,25 +105,25 @@ public class Lee {
 			//System.out.println("el color es "+current.getColor());
 			grid[x1-1][y1]=(current.getColor() >= 10)? (current.getColor()+1):(10); // si la anterior tiene numero le agrego peso, sino, comienzo el camino 
 			arr.add(new Cell(x1-1,y1,(current.getColor() >= 10)? (current.getColor()+1):(10)));
-			printMatrix(grid);
+			printMatrix(grid,x,y);
 		}
-		if( x1 != tab.getX()-1 && grid[x1+1][y1]== -1){
+		if( x1 != x-1 && grid[x1+1][y1]== -1){
 			//System.out.println("el color es "+current.getColor());
 			grid[x1+1][y1]=(current.getColor() >= 10)? (current.getColor()+1):(10);
 			arr.add(new Cell(x1+1,y1,(current.getColor() >= 10)? (current.getColor()+1):(10)));
-			printMatrix(grid);
+			printMatrix(grid,x,y);
 		}
 		if( y1 != 0 && grid[x1][y1-1]== -1){
 			//System.out.println("el color es "+current.getColor());
 			grid[x1][y1-1]=(current.getColor() >= 10)? (current.getColor()+1):(10);
 			arr.add(new Cell(x1,y1-1,(current.getColor() >= 10)? (current.getColor()+1):(10)));
-			printMatrix(grid);
+			printMatrix(grid,x,y);
 		}
-		if( y1 != tab.getY()-1 && grid[x1][y1+1]== -1){
+		if( y1 != y-1 && grid[x1][y1+1]== -1){
 			//System.out.println("el color es "+current.getColor());
 			grid[x1][y1+1]=(current.getColor() >= 10)? (current.getColor()+1):(10);
 			arr.add(new Cell(x1,y1+1,(current.getColor() >= 10)? (current.getColor()+1):(10)));
-			printMatrix(grid);
+			printMatrix(grid,x,y);
 		}
 		if ( (x1-1== x2 && y1 == y2) || (x1+1== x2 && y1 == y2) || (x1== x2 && y1-1 == y2) || (x1== x2 && y1+1 == y2)){
 			System.out.println("found tgt!");
@@ -138,7 +135,7 @@ public class Lee {
 		return arr;
 	}
 
-	private int[][] markPath(int[][] grid, Cell tgt, Cell source) {
+	private int[][] markPath(TableroControl tab, int[][] grid, Cell tgt, Cell source) {
 		int x=tgt.getX(),y=tgt.getY();
 		int x2=source.getX(), y2=source.getY();
 		int pathLength=0;
@@ -183,34 +180,33 @@ public class Lee {
 				min.setY(y2);
 				min.setColor(tgt.getColor());
 			}
-			printMatrix(grid);
+			printMatrix(grid,x,y);
 			System.out.println(tgt.getColor());
 			grid[min.getX()][min.getY()]=tgt.getColor(); // como los colores van de 0 a 9 cuando llegue a 10 y lo pinte cortara la iteracion
 			x=min.getX();
 			y=min.getY();
 			path.add(new Cell(x,y,tgt.getColor())); // agregamos la celda al camino
 			System.out.println("las coordenadas de current son x: "+min.getX()+ " y: "+min.getY() +" y su color "+min.getColor());
-			printMatrix(grid);
+			printMatrix(grid,x,y);
 			pathLength++;
 			System.out.println("largo del camino: "+ pathLength);
 			check=!( (min.getX() == x2) && (min.getY() == y2) );
 		}
 		System.out.println("largo del camino: "+ pathLength);
 		if(pathLength > 0){
-			addPath(source, pathLength, path); // agrega la longitud y el camino al objeto
+			addPath(tab, source, pathLength, path); // agrega la longitud y el camino al objeto
 		}
-		
 		
 		return grid;
 		
 	}
 
-	private void addPath(Cell source, int pathLength, LinkedList<Cell> path) {
+	private void addPath(TableroControl tab,Cell source, int pathLength, LinkedList<Cell> path) {
 		int x=source.getX(), y=source.getY();
-		for(int i=0; i<sinks.size(); i++){
-			if( ( x==sinks.get(i).getFirstX() && y==sinks.get(i).getFirstY() ) || ( x==sinks.get(i).getSecX() && y==sinks.get(i).getSecY() ) ){
-				sinks.get(i).setPathLength(pathLength);
-				sinks.get(i).setPath(path);
+		for(int i=0; i<tab.getSinks().size(); i++){
+			if( ( x==tab.getSinks().get(i).getFirstX() && y==tab.getSinks().get(i).getFirstY() ) || ( x==tab.getSinks().get(i).getSecX() && y==tab.getSinks().get(i).getSecY() ) ){
+				tab.getSinks().get(i).setPathLength(pathLength);
+				tab.getSinks().get(i).setPath(path);
 			}
 		}
 		
