@@ -10,6 +10,7 @@ public class ApproxMethod {
 	
 	public void approxSolution(TableroControl tab, long time, boolean progress){
 		
+		TableroControl auxTab;
 		Lee lee=new Lee();
 		HillClimb hc=new HillClimb();
 		int[][] grid;
@@ -20,9 +21,10 @@ public class ApproxMethod {
 				System.out.println("enter");
 				long start=System.currentTimeMillis();
 				tab=lee.getSolution(tab,time,progress);
-				grid=hc.climbSolution(tab.getTablero(), tab.getX(), tab.getY(), tab.getSinks());
-				tab.setTablero(grid);
-				lee.printMatrix(grid,tab.getX(), tab.getY());
+				auxTab=hc.climbSolution(tab.getTablero(), tab.getX(), tab.getY(), tab.getSinks());
+				tab.setTablero(auxTab.getTablero());
+				lee.printMatrix(auxTab.getTablero(),tab.getX(), tab.getY());
+
 				long end=System.currentTimeMillis();
 				took=end-start;
 				System.out.println("Current time: " +time);
