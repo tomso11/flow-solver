@@ -54,14 +54,15 @@ public class Lee {
 		System.out.println("El algoritmo de Lee tomo : "+ (endTime-startTime) +" ms");
 		
 	}
-	
-	public TableroControl getSolution(TableroControl tab, long time, boolean progress){
-		long start=System.currentTimeMillis(); // tiempo en el que empieza
+
+		public TableroControl getSolution(TableroControl tab, AtomicInteger time, boolean progress){
+		long start=System.nanoTime(); // tiempo en el que empieza
 		LinkedList<Cell> queue = new LinkedList<Cell>();
 		int[][] grid = tab.getTablero();
 		boolean found=false;
 		List<Cell> neighbors=new ArrayList<Cell>();
-		for(int i=0; i< tab.getSinks().size() && time > 0 ; i++){ 
+		long t = time.get();
+		for(int i=0; i< tab.getSinks().size() && t > 0 ; i++){ 
 			
 			if(tab.getSinks().get(i).getPathLength() == 0){
 				Cell c=new Cell(tab.getSinks().get(i).getFirstX(),tab.getSinks().get(i).getFirstY(),tab.getSinks().get(i).getColor() );
@@ -94,14 +95,14 @@ public class Lee {
 //				printMatrix(grid,tab.getX(),tab.getY());
 				found=false;
 			}
-			long end = System.currentTimeMillis(); // para calcular el tiempo
-			time=time-(end-start);
-			
+			long end = System.nanoTime(); // para calcular el tiempo
+			t = t - (end - start)/10000;			
 		}
+		time.set((int)(System.nanoTime() - start)/1000000);
 		tab.setTablero(grid);
 		return tab;
 	}
-
+	
 	private List<Cell> getNeighbors(Cell current, int[][] grid, Cell tgt, int x, int y) {
 		List<Cell> arr = new ArrayList<Cell>();
 		int x1=current.getX(),y1=current.getY();
