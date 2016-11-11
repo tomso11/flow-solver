@@ -9,7 +9,7 @@ public class ApproxMethod {
 	}
 	
 	public void approxSolution(TableroControl tab, long time, boolean progress){
-		TableroControl tabClimb;
+		TableroControl tabClimb= tab;
 		TableroControl tabClimbMax = null;
 		long timeBest=0;
 		Lee lee=new Lee();
