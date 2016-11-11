@@ -18,25 +18,7 @@ public class ExactMethod {
 		int bestSolutionEmpty = (tab.getFils()*tab.getCols())-(tab.getColours()*2);
 		solutions.add(tab);
 		
-		for (int i = 0 ; i < tab.getColours()*2; i+=2 ){
-			System.out.println(tab.getColour(i/2));
-			System.out.println(solutions.size());
-			System.out.println(finalSolution.size());
-			
-			//if (tab.getColour(i/2) == 3){
-			//	solutions.get(2);
-			//for (Tablero each : solutions){
-			//	for (int x=0; x < 6; x++) {
-			//		System.out.print("|");
-			//		for (int y=0; y < 6 ; y++) {
-			//			System.out.print (each.getTablero()[x][y]);
-			//			if (y!=5) System.out.print("\t");
-			//		}
-			//		System.out.println("|");
-			//	}
-			//}
-			//}
-			
+		for (int i = 0 ; i < tab.getColours()*2; i+=2 ){		
 			for (Tablero each: solutions){
 				findPath(each, sink[i],null ,sink[i+1],tab.getColour(i/2),print,finalSolution);
 			}
@@ -44,6 +26,7 @@ public class ExactMethod {
 			solutions.addAll(finalSolution);
 			finalSolution.clear();;
 		}
+		
 		for (Tablero each : solutions ){
 			int eachEmpty = each.cellsEmpty();
 			if ( eachEmpty < bestSolutionEmpty){
@@ -52,18 +35,27 @@ public class ExactMethod {
 			}
 		}
 
-		System.out.println("Solution GameBoard:");
-			for (int x=0; x < 6; x++) {
+		System.out.println("Exact Solution GameBoard:\n");
+			for (int x=0; x < tab.getFils(); x++) {
 				System.out.print("|");
-				for (int y=0; y < 6 ; y++) {
+				for (int y=0; y < tab.getCols(); y++) {
 					System.out.print (bestSolution.getTablero()[x][y]);
-					if (y!=5) System.out.print("\t");
+					if (y!=tab.getCols()) System.out.print("\t");
 				}
 				System.out.println("|");
 			}
-					
+		
 		time = System.currentTimeMillis() - time;
-		System.out.println("El algoritmo encontro la solucion exacta en " + time/60000 + " minutos," + (time%60000)/1000 + " segundos y " + (time%1000) +" milisegundos.");
+		
+		MainFrame draw = new MainFrame(bestSolution.getFils(),bestSolution.getCols(),bestSolution.getTablero());
+		draw.setVisible(true);
+		try{
+		Thread.sleep(200);
+		}catch(InterruptedException ex){
+		Thread.currentThread().interrupt();
+		}
+					
+		System.out.println("\nEl algoritmo encontro la solucion exacta en " + time/60000 + " minutos," + (time%60000)/1000 + " segundos y " + (time%1000) +" milisegundos.");
 		return;
 	}
 
@@ -92,15 +84,6 @@ public class ExactMethod {
 					findPath(tablero,origin,cell,destiny,colour,print,finalSolution);
 				}else{
 					if (cell.equals(destiny) ){
-							//MainFrame draw = new MainFrame(tablero.getFils(),tablero.getCols(),tablero.getTablero());
-							//draw.setVisible(true);
-							//draw.setVisible(true);
-							//try{
-							//	Thread.sleep(100);
-							//}catch(InterruptedException ex){
-							//	Thread.currentThread().interrupt();
-							//}
-							//draw.dispose();	
 						Tablero oneSolution = tablero.clone();
 						finalSolution.add(oneSolution);
 						if(!origin.equals(current))
@@ -115,27 +98,3 @@ public class ExactMethod {
 		return;
 	}
 }
-
-
-//Abrir ventana tablero!
-//MainFrame draw = new MainFrame(tablero.getFils(),tablero.getCols(),tablero.getTablero());
-//draw.setVisible(true);
-//draw.setVisible(true);
-//try{
-//	Thread.sleep(200);
-//}catch(InterruptedException ex){
-//	Thread.currentThread().interrupt();
-//}
-//draw.dispose();
-
-//Imprimir tablero en consola.
-//for (Tablero each : solutions){
-//	for (int x=0; x < 6; x++) {
-//		System.out.print("|");
-//		for (int y=0; y < 6 ; y++) {
-//			System.out.print (each.getTablero()[x][y]);
-//			if (y!=5) System.out.print("\t");
-//		}
-//		System.out.println("|");
-//	}
-//}
