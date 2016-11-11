@@ -19,7 +19,7 @@ public class ApproxMethod {
 		while(time-took > 0 && !tab.isSolved() ){
 				System.out.println("enter");
 				long start=System.currentTimeMillis();
-				tab=lee.getSolution(tab);
+				tab=lee.getSolution(tab,time,progress);
 				grid=hc.climbSolution(tab.getTablero(), tab.getX(), tab.getY(), tab.getSinks());
 				tab.setTablero(grid);
 				lee.printMatrix(grid,tab.getX(), tab.getY());

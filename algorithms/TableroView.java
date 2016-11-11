@@ -85,10 +85,7 @@ public class TableroView extends JPanel implements ComponentListener , ActionLis
     
     public void pintarCasilla(int fila, int columna, int color){
     	switch(color){
-    		case -1: 
-    			mCasillas[fila][columna].setBackground(Color.BLACK);
-                mCasillas[fila][columna].setOpaque(true);
-                break;
+    		
     		case 0: 
                 mCasillas[fila][columna].setBackground(Color.WHITE);
                 mCasillas[fila][columna].setOpaque(true);
@@ -127,6 +124,10 @@ public class TableroView extends JPanel implements ComponentListener , ActionLis
                 break;
     		case 9: 
                 mCasillas[fila][columna].setBackground(Color.PINK);
+                mCasillas[fila][columna].setOpaque(true);
+                break;
+    		default: 
+    			mCasillas[fila][columna].setBackground(Color.BLACK);
                 mCasillas[fila][columna].setOpaque(true);
                 break;
     	}

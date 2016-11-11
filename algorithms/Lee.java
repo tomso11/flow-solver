@@ -48,19 +48,22 @@ public class Lee {
 		int[] colors={0,1,2};
 		TableroControl tab=new TableroControl(grid, 6, 5, colors, sinks);
 		Lee input=new Lee();
+		long time=3000*10000;
 		//input.quickSolution();
-		input.getSolution(tab);
+		input.getSolution(tab,time,true);
 		long endTime=System.currentTimeMillis();
 		System.out.println("El proceso tomo : "+ (endTime-startTime) +" ms");
 		
 	}
 	
-	public TableroControl getSolution(TableroControl tab){
+	public TableroControl getSolution(TableroControl tab, long time, boolean progress){
+		long start=System.currentTimeMillis(); // tiempo en el que empieza
 		LinkedList<Cell> queue = new LinkedList<Cell>();
 		int[][] grid = tab.getTablero();
 		boolean found=false;
 		List<Cell> neighbors=new ArrayList<Cell>();
-		for(int i=0; i< tab.getSinks().size() ; i++){ 
+		for(int i=0; i< tab.getSinks().size() && time > 0 ; i++){ 
+			
 			if(tab.getSinks().get(i).getPathLength() == 0){
 				Cell c=new Cell(tab.getSinks().get(i).getFirstX(),tab.getSinks().get(i).getFirstY(),tab.getSinks().get(i).getColor() );
 				Cell tgt=new Cell(tab.getSinks().get(i).getSecX(),tab.getSinks().get(i).getSecY(),tab.getSinks().get(i).getColor() );
@@ -75,7 +78,7 @@ public class Lee {
 						for(int j=0; j< neighbors.size() && !found; j++){
 							System.out.println("las coordenadas de este neigh son x: "+neighbors.get(j).getX()+ " y: "+neighbors.get(j).getY() );
 							if((neighbors.get(j)).equals(tgt)){
-								grid=markPath(tab, grid, tgt, c);
+								grid=markPath(tab, grid, tgt, c, progress);
 								found=true;
 								queue=emptyQ(queue);
 							}
@@ -91,6 +94,19 @@ public class Lee {
 				queue=emptyQ(queue);
 				printMatrix(grid,tab.getX(),tab.getY());
 				found=false;
+			}
+			long end = System.currentTimeMillis(); // para calcular el tiempo
+			time=time-(end-start);
+			if(progress){
+				MainFrame draw = new MainFrame(tab.getX(),tab.getY(),grid);
+				draw.setVisible(true);
+				draw.setVisible(true);
+				try{
+					Thread.sleep(200);
+				}catch(InterruptedException ex){
+					Thread.currentThread().interrupt();
+				}
+				draw.dispose();
 			}
 		}
 		tab.setTablero(grid);
@@ -135,7 +151,7 @@ public class Lee {
 		return arr;
 	}
 
-	private int[][] markPath(TableroControl tab, int[][] grid, Cell tgt, Cell source) {
+	private int[][] markPath(TableroControl tab, int[][] grid, Cell tgt, Cell source, boolean progress) {
 		int x=tgt.getX(),y=tgt.getY();
 		int x2=source.getX(), y2=source.getY();
 		int pathLength=0;
@@ -191,6 +207,19 @@ public class Lee {
 			pathLength++;
 			System.out.println("largo del camino: "+ pathLength);
 			check=!( (min.getX() == x2) && (min.getY() == y2) );
+			// hacer el print en consola
+			if(progress){
+				MainFrame draw = new MainFrame(tab.getX(),tab.getY(),grid);
+				draw.setVisible(true);
+				draw.setVisible(true);
+				try{
+					Thread.sleep(200);
+				}catch(InterruptedException ex){
+					Thread.currentThread().interrupt();
+				}
+				draw.dispose();
+			}
+			
 		}
 		System.out.println("largo del camino: "+ pathLength);
 		if(pathLength > 0){
