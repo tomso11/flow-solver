@@ -16,8 +16,9 @@ public class Game {
 			if (game.input(text)){
 				int[][] table = VerifyInput.getTable();
 				TableroControl tab=game.getTableroInstance();
-				System.out.println("Free Flow Game Solver!");
+				System.out.println("Free Flow Game Solver!\n");
 				System.out.println("Beginning GameBoard:");
+				System.out.println("Rows: " + game.getFils() + "   Columns: " + game.getCols() + "\n");
 				
 		
 				for (int x=0; x < game.getFils(); x++) {
@@ -28,14 +29,12 @@ public class Game {
 			  		}
 			  		System.out.println("|");
 				}
+				
+				System.out.println("\nWait. The program is Runing...\n");
 		
 				MainFrame window0 = new MainFrame(game.getFils(),game.getCols(),table);
 				window0.setVisible(true);
 				Tablero tablero = new Tablero(table ,game.getFils(),game.getCols(),game.getColours(),game.getSinks());
-				MainFrame window = new MainFrame(game.getFils(),game.getCols(),table);
-        		window.setVisible(true);
-				/*ExactMethod solution = new ExactMethod();
-				solution.ExactSolution(tablero, false);*/
         
 				if (args[1].equals(exact)){
 					ExactMethod solution = new ExactMethod();
@@ -51,9 +50,9 @@ public class Game {
 					if ((args.length==3 || args.length==4) && isInt(args[2])){
 						time=Integer.parseInt(args[2]);
 						if(args.length==4 && args[3].equals(progress)){
-							aprox.approxSolution(tab, time, true); /*ACA INVOQUEN AL APROX CON EL TIEMPO Y EL PRINT*/
+							aprox.approxSolution(tab, time, true); 
 						}else if(args.length==3){
-							aprox.approxSolution(tab, time, false);  /*ACA INVOQUEN AL APROX CON EL TIEMPO Y SIN EL PRINT*/
+							aprox.approxSolution(tab, time, false);
 						}else throw new  IllegalArgumentException();
 					}else throw new  IllegalArgumentException();
 			
