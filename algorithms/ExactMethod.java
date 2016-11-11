@@ -34,8 +34,13 @@ public class ExactMethod {
 				bestSolutionEmpty = eachEmpty;
 			}
 		}
-
-		System.out.println("Exact Solution GameBoard:\n");
+		
+		time = System.currentTimeMillis() - time;
+		
+		if (bestSolution.equals(tab)){
+			System.out.println("\nThe entered Gameboard has no solution!");
+		}else {
+			System.out.println("Exact Solution GameBoard:\n");
 			for (int x=0; x < tab.getFils(); x++) {
 				System.out.print("|");
 				for (int y=0; y < tab.getCols(); y++) {
@@ -44,18 +49,17 @@ public class ExactMethod {
 				}
 				System.out.println("|");
 			}
-		
-		time = System.currentTimeMillis() - time;
-		
-		MainFrame draw = new MainFrame(bestSolution.getFils(),bestSolution.getCols(),bestSolution.getTablero());
-		draw.setVisible(true);
-		try{
-		Thread.sleep(200);
-		}catch(InterruptedException ex){
-		Thread.currentThread().interrupt();
+			
+			MainFrame draw = new MainFrame(bestSolution.getFils(),bestSolution.getCols(),bestSolution.getTablero());
+			draw.setVisible(true);
+			try{
+			Thread.sleep(200);
+			}catch(InterruptedException ex){
+			Thread.currentThread().interrupt();
+			}
 		}
 					
-		System.out.println("\nEl algoritmo encontro la solucion exacta en " + time/60000 + " minutos," + (time%60000)/1000 + " segundos y " + (time%1000) +" milisegundos.");
+		System.out.println("\nThe algorithm found the exact solution in " + time/60000 + " minutes, " + (time%60000)/1000 + " seconds and " + (time%1000) + " milliseconds.");
 		return;
 	}
 
