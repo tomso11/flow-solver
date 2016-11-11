@@ -27,7 +27,7 @@ public class VerifyInput {
 			else {
 				if (entry == 0){
 						if (ent.charAt(i) != ',') {
-							System.out.println("The file format is incorrect!");
+							System.out.println("The file format is incorrect! (Rows)");
 							return false;
 						}
 						entry = 1;
@@ -35,7 +35,7 @@ public class VerifyInput {
 				else{
 					if (entry == 1){
 						if (ent.charAt(i) != '*') {
-							System.out.println("The file format is incorrect!");
+							System.out.println("The file format is incorrect! (Columns)");
 							return false;
 						}
 						entry = 2;
@@ -58,7 +58,7 @@ public class VerifyInput {
 					table[j][k] = -1;
 				}
 				else{
-					System.out.println("The file format is incorrect!");
+					System.out.println("The file format is incorrect! (Board Data)");
 					return false;
 				}
 				i++;
