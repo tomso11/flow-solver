@@ -9,36 +9,56 @@ public class ApproxMethod {
 	}
 	
 	public void approxSolution(TableroControl tab, long time, boolean progress){
-		TableroControl bestTab=null;
-		TableroControl auxTab;
+		TableroControl tabClimb;
+		TableroControl tabClimbMax = null;
 		Lee lee=new Lee();
-		HillClimb hc=new HillClimb();
 		int[][] grid;
 		int[][] best;
 		long took=0;
 		while(time> 0 && !tab.isSolved() ){
-				System.out.println("enter");
-				long start=System.currentTimeMillis();
-				tab=lee.getSolution(tab,time,progress);
-				auxTab=hc.climbSolution(tab.getTablero(), tab.getX(), tab.getY(), tab.getSinks());
-				tab.setTablero(auxTab.getTablero());
-				lee.printMatrix(auxTab.getTablero(),tab.getX(), tab.getY());
-
-				long end=System.currentTimeMillis();
-				took=end-start;
-				System.out.println("Current time: " +time);
-				time=time-took;
+			System.out.println("enter");
+			long start=System.currentTimeMillis();
+			// Escala hacia la solucion
+			// Falta agregarle el progress y time
+			tabClimb=HillClimb.climbSolution(tab.getTablero(), tab.getX(), tab.getY(), tab.getSinks());
+			
+			// Si algun camino no estan conectado corre el Lee de nuevo para ver si puede conectar los que falta 
+			if(!tabClimb.isPathsConected()) {
+				tabClimb=lee.getSolution(tabClimb,time,progress);
+				tabClimbMax=tabClimb;
+			// Si estan todos conectados pregunta si el puntaje de la ultima escalada es mejor que el de maximo registrado
+			} else {
+				if(tabClimb.getScore() >= tabClimbMax.getScore()) {
+					tabClimbMax = tabClimb;
+				}
+			}
+	    	System.out.println();
+			for(int p = 0; p < tabClimb.getX(); p++) {
+				for(int o = 0; o < tabClimb.getY(); o++) {
+					if(tabClimb.getTablero()[p][o] == -1) {
+						System.out.print(" " + " ");
+					} else {
+						System.out.print(tabClimb.getTablero()[p][o] + " ");
+					}
+				}
+				System.out.println();
+			}
+			System.out.println();
+//			lee.printMatrix(auxTab.getTablero(),tab.getX(), tab.getY());
+			long end=System.currentTimeMillis();
+			took=end-start;
+			System.out.println("Current time: " +time);
 		}
 		System.out.println("Approx Solution GameBoard:\n");
 		for (int x=0; x < tab.getX(); x++) {
 			System.out.print("|");
 			for (int y=0; y < tab.getY(); y++) {
-				System.out.print (bestTab.getTablero()[x][y]);
+				System.out.print (tabClimbMax.getTablero()[x][y]);
 				if (y!=tab.getY()) System.out.print("\t");
 			}
 			System.out.println("|");
 		}
-		System.out.println("\nEl algoritmo encontro la solucion exacta en " + time/60000 + " minutos," + (time%60000)/1000 + " segundos y " + (time%1000) +" milisegundos.");
+		System.out.println("\nThe algorithm found the exact solution in " + time/60000 + " minutes," + (time%60000)/1000 + " seconds and " + (time%1000) +" milliseconds.");
 	}
 
 	public static void main(String[] args) {

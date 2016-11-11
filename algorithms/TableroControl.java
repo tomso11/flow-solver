@@ -127,6 +127,15 @@ public class TableroControl {
 			}	
 	}
 	
+	public boolean isPathsConected() {
+		for(int i=0; i<getSinks().size(); i++){
+			if(getSinks().get(i).getPathLength() == 0){
+				return false;
+			}
+		}
+		return true;
+	}
+	
 //	@SuppressWarnings("null")
 //	public TableroControl[] findChildren( Cell c ) {
 //		int i=c.getX(),j=c.getY(), index=0;
