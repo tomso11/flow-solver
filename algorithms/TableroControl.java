@@ -116,6 +116,17 @@ public class TableroControl {
 		
 	}
 	
+	public void printMatrix(){
+			for (int x=0; x < getX(); x++) {
+				System.out.print("|");
+				for (int y=0; y < getY() ; y++) {
+					System.out.print (getTablero()[x][y]);
+					if (y!=getY()) System.out.print("\t");
+				}
+				System.out.println("|");
+			}	
+	}
+	
 //	@SuppressWarnings("null")
 //	public TableroControl[] findChildren( Cell c ) {
 //		int i=c.getX(),j=c.getY(), index=0;

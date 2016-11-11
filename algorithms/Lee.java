@@ -97,17 +97,7 @@ public class Lee {
 			}
 			long end = System.currentTimeMillis(); // para calcular el tiempo
 			time=time-(end-start);
-			if(progress){
-				MainFrame draw = new MainFrame(tab.getX(),tab.getY(),grid);
-				draw.setVisible(true);
-				draw.setVisible(true);
-				try{
-					Thread.sleep(200);
-				}catch(InterruptedException ex){
-					Thread.currentThread().interrupt();
-				}
-				draw.dispose();
-			}
+			
 		}
 		tab.setTablero(grid);
 		return tab;

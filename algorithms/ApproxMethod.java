@@ -9,15 +9,14 @@ public class ApproxMethod {
 	}
 	
 	public void approxSolution(TableroControl tab, long time, boolean progress){
-		
+		TableroControl bestTab=null;
 		TableroControl auxTab;
 		Lee lee=new Lee();
 		HillClimb hc=new HillClimb();
 		int[][] grid;
 		int[][] best;
 		long took=0;
-		System.out.println(time + "   " + took+ "   "+ tab.isSolved() );
-		while(time-took > 0 && !tab.isSolved() ){
+		while(time> 0 && !tab.isSolved() ){
 				System.out.println("enter");
 				long start=System.currentTimeMillis();
 				tab=lee.getSolution(tab,time,progress);
@@ -28,7 +27,18 @@ public class ApproxMethod {
 				long end=System.currentTimeMillis();
 				took=end-start;
 				System.out.println("Current time: " +time);
+				time=time-took;
 		}
+		System.out.println("Approx Solution GameBoard:\n");
+		for (int x=0; x < tab.getX(); x++) {
+			System.out.print("|");
+			for (int y=0; y < tab.getY(); y++) {
+				System.out.print (bestTab.getTablero()[x][y]);
+				if (y!=tab.getY()) System.out.print("\t");
+			}
+			System.out.println("|");
+		}
+		System.out.println("\nEl algoritmo encontro la solucion exacta en " + time/60000 + " minutos," + (time%60000)/1000 + " segundos y " + (time%1000) +" milisegundos.");
 	}
 
 	public static void main(String[] args) {
@@ -43,7 +53,7 @@ public class ApproxMethod {
 		int[] colors={0,1,2};
 		TableroControl tab=new TableroControl(grid, 6, 5, colors, sinks);
 		ApproxMethod app = new ApproxMethod();
-		long time=300000 * 10000000;
+		long time=30 * 10000;
 		app.approxSolution(tab, time, false);
 	}
 }
