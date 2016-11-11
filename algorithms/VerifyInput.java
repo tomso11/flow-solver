@@ -27,20 +27,18 @@ public class VerifyInput {
 			else {
 				if (entry == 0){
 						if (ent.charAt(i) != ',') {
-							System.out.println("El formato del archivo es incorrecto!");
+							System.out.println("The file format is incorrect!");
 							return false;
 						}
-						System.out.println("Filas: " + fils);
 						entry = 1;
 				}
 				else{
 					if (entry == 1){
 						if (ent.charAt(i) != '*') {
-							System.out.println("El formato del archivo es incorrecto!");
+							System.out.println("The file format is incorrect!");
 							return false;
 						}
 						entry = 2;
-						System.out.println("Columnas: " + cols);
 					}
 				}
 			}
@@ -60,20 +58,20 @@ public class VerifyInput {
 					table[j][k] = -1;
 				}
 				else{
-					System.out.println("El formato del archivo es incorrecto!");
+					System.out.println("The file format is incorrect!");
 					return false;
 				}
 				i++;
 			}
 			if (ent.charAt(i)!='*'){
-				System.out.println("El formato del archivo es incorrecto! No se respeta la dimension del tablero.");
+				System.out.println("The file format is incorrect! The dimension of the board is not respected.");
 				return false;
 			}
 			i++;
 		}
 		for ( int j=0 ; j< 10 ; j++){
 			if (colours[j] != 0 && colours[j] != 2){
-				System.out.println("El formato del archivo es incorrecto! Revisar los colores!");
+				System.out.println("The file format is incorrect! Check the Colours!");
 				return false;
 			}
 		}
