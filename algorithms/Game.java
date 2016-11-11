@@ -30,7 +30,7 @@ public class Game {
 			  		System.out.println("|");
 				}
 				
-				System.out.println("\nWait. The program is Runing...\n");
+				System.out.println("\nWait. The program is Running...\n");
 		
 				MainFrame window0 = new MainFrame(game.getFils(),game.getCols(),table);
 				window0.setVisible(true);
